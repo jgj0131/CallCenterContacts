@@ -15,6 +15,9 @@
 		15918515241DC4C500D75673 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15918513241DC4C500D75673 /* LaunchScreen.storyboard */; };
 		15918520241DC4C500D75673 /* CallCenterContactsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1591851F241DC4C500D75673 /* CallCenterContactsTests.swift */; };
 		1591852B241DC4C500D75673 /* CallCenterContactsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1591852A241DC4C500D75673 /* CallCenterContactsUITests.swift */; };
+		2118177AD79E4BAA1C7128F5 /* Pods_CallCenterContacts_CallCenterContactsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA5853D05D59E07DB2A7DF5A /* Pods_CallCenterContacts_CallCenterContactsUITests.framework */; };
+		75BD30925C1BB1166EE49445 /* Pods_CallCenterContacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 647D75871B9B2D89217B7438 /* Pods_CallCenterContacts.framework */; };
+		AB4605777584381803C547E4 /* Pods_CallCenterContactsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3CC71146154A4E2778C403D /* Pods_CallCenterContactsTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +52,15 @@
 		15918526241DC4C500D75673 /* CallCenterContactsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CallCenterContactsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1591852A241DC4C500D75673 /* CallCenterContactsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCenterContactsUITests.swift; sourceTree = "<group>"; };
 		1591852C241DC4C500D75673 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		16F31B9C8E7CA2C0423EF44B /* Pods-CallCenterContacts.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CallCenterContacts.release.xcconfig"; path = "Target Support Files/Pods-CallCenterContacts/Pods-CallCenterContacts.release.xcconfig"; sourceTree = "<group>"; };
+		647D75871B9B2D89217B7438 /* Pods_CallCenterContacts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CallCenterContacts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		79D3E61630E98CD1608EBEF9 /* Pods-CallCenterContactsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CallCenterContactsTests.debug.xcconfig"; path = "Target Support Files/Pods-CallCenterContactsTests/Pods-CallCenterContactsTests.debug.xcconfig"; sourceTree = "<group>"; };
+		908C72910635B7B96D018594 /* Pods-CallCenterContacts-CallCenterContactsUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CallCenterContacts-CallCenterContactsUITests.debug.xcconfig"; path = "Target Support Files/Pods-CallCenterContacts-CallCenterContactsUITests/Pods-CallCenterContacts-CallCenterContactsUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		999FE958CF2D1C3358B960D3 /* Pods-CallCenterContacts-CallCenterContactsUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CallCenterContacts-CallCenterContactsUITests.release.xcconfig"; path = "Target Support Files/Pods-CallCenterContacts-CallCenterContactsUITests/Pods-CallCenterContacts-CallCenterContactsUITests.release.xcconfig"; sourceTree = "<group>"; };
+		A3CC71146154A4E2778C403D /* Pods_CallCenterContactsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CallCenterContactsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BEBFEF5ADAA9DA4E1A4298BB /* Pods-CallCenterContactsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CallCenterContactsTests.release.xcconfig"; path = "Target Support Files/Pods-CallCenterContactsTests/Pods-CallCenterContactsTests.release.xcconfig"; sourceTree = "<group>"; };
+		CA5853D05D59E07DB2A7DF5A /* Pods_CallCenterContacts_CallCenterContactsUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CallCenterContacts_CallCenterContactsUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DAC9E9217969921D8DB83F4F /* Pods-CallCenterContacts.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CallCenterContacts.debug.xcconfig"; path = "Target Support Files/Pods-CallCenterContacts/Pods-CallCenterContacts.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75BD30925C1BB1166EE49445 /* Pods_CallCenterContacts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB4605777584381803C547E4 /* Pods_CallCenterContactsTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,6 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2118177AD79E4BAA1C7128F5 /* Pods_CallCenterContacts_CallCenterContactsUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +98,8 @@
 				1591851E241DC4C500D75673 /* CallCenterContactsTests */,
 				15918529241DC4C500D75673 /* CallCenterContactsUITests */,
 				15918506241DC4C300D75673 /* Products */,
+				E43BE971E751435E8603F63D /* Pods */,
+				5B8E3C1F84EB4C5CE31171DE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -128,6 +145,30 @@
 			path = CallCenterContactsUITests;
 			sourceTree = "<group>";
 		};
+		5B8E3C1F84EB4C5CE31171DE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				647D75871B9B2D89217B7438 /* Pods_CallCenterContacts.framework */,
+				CA5853D05D59E07DB2A7DF5A /* Pods_CallCenterContacts_CallCenterContactsUITests.framework */,
+				A3CC71146154A4E2778C403D /* Pods_CallCenterContactsTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E43BE971E751435E8603F63D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DAC9E9217969921D8DB83F4F /* Pods-CallCenterContacts.debug.xcconfig */,
+				16F31B9C8E7CA2C0423EF44B /* Pods-CallCenterContacts.release.xcconfig */,
+				908C72910635B7B96D018594 /* Pods-CallCenterContacts-CallCenterContactsUITests.debug.xcconfig */,
+				999FE958CF2D1C3358B960D3 /* Pods-CallCenterContacts-CallCenterContactsUITests.release.xcconfig */,
+				79D3E61630E98CD1608EBEF9 /* Pods-CallCenterContactsTests.debug.xcconfig */,
+				BEBFEF5ADAA9DA4E1A4298BB /* Pods-CallCenterContactsTests.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -135,9 +176,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1591852F241DC4C500D75673 /* Build configuration list for PBXNativeTarget "CallCenterContacts" */;
 			buildPhases = (
+				B89431BF3EBF495F0FA9BEE1 /* [CP] Check Pods Manifest.lock */,
 				15918501241DC4C300D75673 /* Sources */,
 				15918502241DC4C300D75673 /* Frameworks */,
 				15918503241DC4C300D75673 /* Resources */,
+				ABD6DDF5A9EEE0376287F12B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -152,6 +195,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 15918532241DC4C500D75673 /* Build configuration list for PBXNativeTarget "CallCenterContactsTests" */;
 			buildPhases = (
+				D7E74B2A7B4B2B857FB0213A /* [CP] Check Pods Manifest.lock */,
 				15918517241DC4C500D75673 /* Sources */,
 				15918518241DC4C500D75673 /* Frameworks */,
 				15918519241DC4C500D75673 /* Resources */,
@@ -170,9 +214,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 15918535241DC4C500D75673 /* Build configuration list for PBXNativeTarget "CallCenterContactsUITests" */;
 			buildPhases = (
+				3721DC34C14E99A346F9F514 /* [CP] Check Pods Manifest.lock */,
 				15918522241DC4C500D75673 /* Sources */,
 				15918523241DC4C500D75673 /* Frameworks */,
 				15918524241DC4C500D75673 /* Resources */,
+				4B31A822465780EBDC6BFB2D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -253,6 +299,109 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3721DC34C14E99A346F9F514 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CallCenterContacts-CallCenterContactsUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4B31A822465780EBDC6BFB2D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CallCenterContacts-CallCenterContactsUITests/Pods-CallCenterContacts-CallCenterContactsUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CallCenterContacts-CallCenterContactsUITests/Pods-CallCenterContacts-CallCenterContactsUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CallCenterContacts-CallCenterContactsUITests/Pods-CallCenterContacts-CallCenterContactsUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ABD6DDF5A9EEE0376287F12B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CallCenterContacts/Pods-CallCenterContacts-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CallCenterContacts/Pods-CallCenterContacts-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CallCenterContacts/Pods-CallCenterContacts-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B89431BF3EBF495F0FA9BEE1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CallCenterContacts-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D7E74B2A7B4B2B857FB0213A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CallCenterContactsTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		15918501241DC4C300D75673 /* Sources */ = {
@@ -432,6 +581,7 @@
 		};
 		15918530241DC4C500D75673 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DAC9E9217969921D8DB83F4F /* Pods-CallCenterContacts.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -450,6 +600,7 @@
 		};
 		15918531241DC4C500D75673 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 16F31B9C8E7CA2C0423EF44B /* Pods-CallCenterContacts.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -468,6 +619,7 @@
 		};
 		15918533241DC4C500D75673 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 79D3E61630E98CD1608EBEF9 /* Pods-CallCenterContactsTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -490,6 +642,7 @@
 		};
 		15918534241DC4C500D75673 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BEBFEF5ADAA9DA4E1A4298BB /* Pods-CallCenterContactsTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -512,6 +665,7 @@
 		};
 		15918536241DC4C500D75673 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 908C72910635B7B96D018594 /* Pods-CallCenterContacts-CallCenterContactsUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -532,6 +686,7 @@
 		};
 		15918537241DC4C500D75673 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 999FE958CF2D1C3358B960D3 /* Pods-CallCenterContacts-CallCenterContactsUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

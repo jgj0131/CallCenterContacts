@@ -1,0 +1,6 @@
+framework module Pods_CallCenterContacts {
+  umbrella header "Pods-CallCenterContacts-umbrella.h"
+
+  export *
+  module * { export * }
+}
