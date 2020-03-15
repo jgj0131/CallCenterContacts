@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     lazy var tableView = UITableView()
     
     // MARK: Property
-    let contactsList = ["금융", "세금"]
+    let contactsList = ["긴급", "금융", "의료", "안보", "세금"]
     
     // MARK: Life Cycle
     override func viewDidLoad() {
@@ -48,6 +48,11 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         cell.textLabel?.text = contactsList[indexPath.row]
+        if cell.textLabel?.text == "긴급" {
+            cell.textLabel?.textColor = .red
+        } else {
+            cell.textLabel?.textColor = .label
+        }
         return cell
     }
     
