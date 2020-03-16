@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     lazy var tableView = UITableView()
     
     // MARK: Property
-    let contactsList = ["긴급", "금융", "의료", "안보", "세금"]
+    let contactsList = ["긴급", "금융", "의료", "안보", "쇼핑", "세금"]
     
     // MARK: Life Cycle
     override func viewDidLoad() {

@@ -17,11 +17,11 @@ class DetailViewController: UIViewController {
     lazy var tableView = UITableView()
     
     // MARK: Property
-    let firestoreCollectionList = ["emergency", "finance", "medical", "security","tax"]
+    let firestoreCollectionList = ["emergency", "finance", "medical", "security", "shopping", "tax"]
     var listIndex = 0
     private var  contactsData: [[String:Any]] = []
-//    let searchController = UISearchController(searchResultsController: nil)
-//    private var filteredContacts = [String]()
+    let searchController = UISearchController(searchResultsController: nil)
+    private var filteredContacts = [[String:Any]]()
     private var contactSectionTitles = [String]()
     private var totalContactsKey = [String:[[String:Any]]]()
     
@@ -31,13 +31,13 @@ class DetailViewController: UIViewController {
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
-//        self.searchController.searchResultsUpdater = self
-//        self.searchController.obscuresBackgroundDuringPresentation = false
-//        self.searchController.searchBar.placeholder = "name"
-//
-//        navigationItem.searchController = searchController
-//        navigationItem.hidesSearchBarWhenScrolling = false
-//        definesPresentationContext = true
+        self.searchController.searchResultsUpdater = self
+        self.searchController.obscuresBackgroundDuringPresentation = false
+        self.searchController.searchBar.placeholder = "name"
+
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        definesPresentationContext = true
         
         // MARK: Firstore - read Data
         let db = Firestore.firestore()
@@ -96,43 +96,93 @@ class DetailViewController: UIViewController {
             }
         }
     }
+    
+    func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        return contactSectionTitles
+    }
+    
+    func searchBarIsEmpty() -> Bool {
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    func filterContentForSearchText(_ searchText: String) {
+        filteredContacts = contactsData.filter({( contact : [String:Any]) -> Bool in
+            let name = contact["name"] as? String ?? ""
+            return name.lowercased().contains(searchText.lowercased())
+      })
+
+      tableView.reloadData()
+    }
+    
+    func isFiltering() -> Bool {
+        return searchController.isActive && !searchBarIsEmpty()
+    }
 }
 
 // MARK: Extension
 extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-//        if isFiltering(){
-//            return 1
-//        } else {
+        if isFiltering(){
+            return 1
+        } else {
             return contactSectionTitles.count
-//        }
+        }
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return contactSectionTitles[section]
+        if isFiltering() {
+            return ""
+        } else {
+            return contactSectionTitles[section]
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let contactKey = contactSectionTitles[section]
-        if let contactValues = totalContactsKey[contactKey] {
-            return contactValues.count
+        if isFiltering() {
+            return filteredContacts.count
+        } else {
+            let contactKey = contactSectionTitles[section]
+            if let contactValues = totalContactsKey[contactKey] {
+                return contactValues.count
+            }
+            return 0
         }
-        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         cell.selectionStyle = .default
-        let contactKey = contactSectionTitles[indexPath.section]
-        if let contactValues = totalContactsKey[contactKey] {
-            cell.textLabel?.text = contactValues[indexPath.row]["name"] as? String ?? ""
+        let contactToDisplay:[String:Any]
+        if isFiltering(){
+            contactToDisplay = filteredContacts[indexPath.row]
+            cell.textLabel?.text = contactToDisplay["name"] as? String ?? ""
+        } else {
+            let contactKey = contactSectionTitles[indexPath.section]
+            if let contactValues = totalContactsKey[contactKey] {
+                cell.textLabel?.text = contactValues[indexPath.row]["name"] as? String ?? ""
+            }
         }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let number = URL(string: "tel://" + (contactsData[indexPath.row]["number"] as? String ?? "")) else { return }
+        var currentContact: [String:String] = [:]
+        if isFiltering() {
+            currentContact["name"] = filteredContacts[indexPath.row]["name"] as? String ?? ""
+            currentContact["number"] = filteredContacts[indexPath.row]["number"] as? String ?? ""
+        } else {
+            currentContact["name"] = (totalContactsKey[contactSectionTitles[indexPath.section]]?[indexPath.row]["name"]) as? String ?? ""
+            currentContact["number"] = (totalContactsKey[contactSectionTitles[indexPath.section]]?[indexPath.row]["number"]) as? String ?? ""
+        }
+        
+        guard let number = URL(string: "tel://" + (currentContact["number"] ?? "")) else { return }
         UIApplication.shared.open(number)
         self.tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+
+extension DetailViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
     }
 }
