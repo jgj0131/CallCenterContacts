@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     lazy var tableView = UITableView()
     
     // MARK: Property
-    let contactsList = ["긴급", "금융", "의료", "안보", "쇼핑", "세금"]
+    let contactsList = ["긴급", "금융", "의료", "안보", "쇼핑", "세금", "추가등록"]
     
     // MARK: Life Cycle
     override func viewDidLoad() {
@@ -57,9 +57,14 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detailViewontroller = DetailViewController()
-        detailViewontroller.listIndex = indexPath.row
-        navigationController?.pushViewController(detailViewontroller, animated: true)
+        if indexPath.row == contactsList.count - 1{
+            let userDefaultViewontroller = UserDefaultViewController()
+            navigationController?.pushViewController(userDefaultViewontroller, animated: true)
+        } else {
+            let detailViewontroller = DetailViewController()
+            detailViewontroller.listIndex = indexPath.row
+            navigationController?.pushViewController(detailViewontroller, animated: true)
+        }
         self.tableView.deselectRow(at: indexPath, animated: true)
     }
 }

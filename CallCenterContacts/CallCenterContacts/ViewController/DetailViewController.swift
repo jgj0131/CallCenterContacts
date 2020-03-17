@@ -24,6 +24,7 @@ class DetailViewController: UIViewController {
     private var filteredContacts = [[String:Any]]()
     private var contactSectionTitles = [String]()
     private var totalContactsKey = [String:[[String:Any]]]()
+    let prefixs: [String:[UInt32]] = ["ㄱ": [4352, 12593], "ㄲ": [4353, 12594], "ㄴ": [4354, 12596], "ㄷ": [4355, 12599], "ㄸ": [4356, 12600], "ㄹ": [4357, 12601], "ㅁ":[4358, 12609], "ㅂ": [4359, 12610], "ㅃ": [4360, 12611], "ㅅ": [4361, 12613], "ㅆ": [4362, 12614], "ㅇ": [4363, 12615], "ㅈ": [4364, 12616], "ㅉ": [4365, 12617], "ㅊ": [4366, 12618], "ㅋ": [4367, 12619], "ㅌ": [4368, 12620], "ㅍ": [4368, 12621], "ㅎ": [4370, 12622]]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,7 +83,7 @@ class DetailViewController: UIViewController {
     }
     
     /// 이름을 받아 한글인 경우 맨 앞글자의 초성을 따오는 메소드
-    func prefixKorean(name:String) -> String {
+    func prefixKorean(name: String) -> String {
         guard let firstText = name.first else { return "" }
         let unicodeText = Unicode.Scalar(String(firstText))?.value
         guard let value = unicodeText else { return "" }
@@ -97,6 +98,16 @@ class DetailViewController: UIViewController {
         }
     }
     
+    // 초성 분리 메소드
+    func extractPrefixKoreann(name:String) -> [String] {
+        let word = name
+        var convertedWord: [String] = []
+        for text in word {
+            convertedWord.append(prefixKorean(name: String(text)))
+        }
+        return convertedWord
+    }
+    
     func sectionIndexTitles(for tableView: UITableView) -> [String]? {
         return contactSectionTitles
     }
@@ -108,9 +119,27 @@ class DetailViewController: UIViewController {
     func filterContentForSearchText(_ searchText: String) {
         filteredContacts = contactsData.filter({( contact : [String:Any]) -> Bool in
             let name = contact["name"] as? String ?? ""
-            return name.lowercased().contains(searchText.lowercased())
+            let convertedName = extractPrefixKoreann(name: name)
+            var judgePrefix = true
+            var value: [String] = []
+            for letter in searchText {
+                let extractedLetter = prefixs[prefixKorean(name: String(letter))]?[0] ?? 0
+                value.append(String(Unicode.Scalar(extractedLetter)!))
+                print(value)
+            }
+            for index in 0..<value.count {
+                if index<convertedName.count {
+                    if convertedName[index] == value[index] && judgePrefix == true {
+                        judgePrefix = true
+                    } else {
+                        judgePrefix = false
+                    }
+                } else {
+                    judgePrefix = false
+                }
+            }
+            return name.lowercased().contains(searchText.lowercased()) || judgePrefix
       })
-
       tableView.reloadData()
     }
     
