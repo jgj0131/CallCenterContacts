@@ -144,6 +144,18 @@ class UserDefaultViewController: UIViewController {
         return searchController.isActive && !searchBarIsEmpty()
     }
     
+    /// 정규표현식을 사용하여 숫자만 추출해주는 메소드
+    func matches(in text: String) -> String {
+        let regex = try? NSRegularExpression(pattern: "[0-9]+", options: .caseInsensitive)
+        let textToNSString = text as NSString
+        let values = regex?.matches(in: text, options: [], range: NSRange(location: 0, length: textToNSString.length)).map {
+            String(text[Range($0.range, in: text)!])
+        }
+        let value = values?.joined()
+        return value ?? ""
+    }
+    
+    /// Row를 추가하는 메소드
     @objc
     func insertRow(_ sender: Any) {
         let alert = UIAlertController(title: "추가하기", message: "이름과 번호를 입력하세요", preferredStyle: .alert)
@@ -156,9 +168,9 @@ class UserDefaultViewController: UIViewController {
         let ok = UIAlertAction(title: "OK", style: .default) { (ok) in
             var value = ["name": "", "number": ""]
             value["name"] = alert.textFields?[0].text
-            value["number"] = alert.textFields?[1].text
+            value["number"] = self.matches(in: alert.textFields?[1].text ?? "")
             self.contactsData.append(value)
-        
+            
             if self.totalContactsKey[self.prefixKorean(name: value["name"] ?? "")] == nil {
                 self.setTotalContactsKey()
                 self.tableView.beginUpdates()
