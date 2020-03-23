@@ -17,7 +17,7 @@ class DetailViewController: UIViewController {
     lazy var tableView = UITableView()
     
     // MARK: Property
-    let firestoreCollectionList = ["emergency", "finance", "medical", "security", "shopping", "tax"]
+    let firestoreCollectionList = ["emergency", "finance", "culture", "civil complaint", "real property", "shopping", "security", "travel", "medical"]
     var listIndex = 0
     private var  contactsData: [[String:Any]] = []
     let searchController = UISearchController(searchResultsController: nil)
