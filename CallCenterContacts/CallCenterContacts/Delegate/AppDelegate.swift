@@ -5,18 +5,29 @@
 //  Created by jang gukjin on 2020/03/15.
 //  Copyright © 2020 jang gukjin. All rights reserved.
 //
-
+import Intents
 import UIKit
 import Firebase
 import FirebaseFirestore
+import CallKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    var window: UIWindow?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         let db = Firestore.firestore()
+        
+        let callDirManager: Void = CXCallDirectoryManager.sharedInstance.reloadExtension(withIdentifier: "group.com.jang-gukjin.CallCenterContacts"/*"jang-gukjin.CallCenterContacts.CallExtension"*/, completionHandler: { (error) in
+            if (error == nil){
+                    print("success!")
+            }else{
+                print(error)
+            }
+        })
         return true
     }
 
@@ -33,7 +44,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
-
-
+    
 }
 
+//extension AppDelegate {
+//    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+//
+//        
+//        
+//        guard let audioCallIntent = userActivity.interaction?.intent as? INStartCallIntent else {
+//            return false
+//        }
+//
+//        
+//        
+//        if let contact = audioCallIntent.contacts?.first {
+//
+//            if let type = contact.personHandle?.type, type == .phoneNumber {
+//
+//                guard let callNumber = contact.personHandle?.value else {
+//                    return false
+//                }
+//
+//                let callUrl = URL(string: "tel://\(callNumber)")
+//
+//                if UIApplication.shared.canOpenURL(callUrl!) {
+//                    UIApplication.shared.open(callUrl!, options: [:], completionHandler: nil)
+//                } else {
+//                    let alertController = UIAlertController(title: nil , message: "Calling not supported", preferredStyle: .alert)
+//                    let okAlertAction = UIAlertAction(title: "Ok" , style: UIAlertAction.Style.default, handler:nil)
+//                    alertController.addAction(okAlertAction)
+//                    self.window?.rootViewController?.present(alertController, animated: true, completion: nil)
+//                }
+//            }
+//        }
+//
+//        return true
+//    }
+//}

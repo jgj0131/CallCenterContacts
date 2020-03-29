@@ -8,6 +8,8 @@
 
 import UIKit
 import SnapKit
+import Intents
+import CallKit
 
 class ViewController: UIViewController {
 
@@ -24,6 +26,22 @@ class ViewController: UIViewController {
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        
+        INPreferences.requestSiriAuthorization { (status) in
+            if status == .authorized {
+                print("Siri access allowed")
+            } else {
+                print("Siri access denied")
+            }
+        }
+        
+        SiriDataManager.sharedManager.saveContacts(contacts: UserDefaults.standard.object(forKey: "userData") as? [[String : String]] ?? [])
+        
+        let provider = CXProvider(configuration: CXProviderConfiguration(localizedName: "CallCenterContacts"))
+        provider.setDelegate(self, queue: nil)
+        let update = CXCallUpdate()
+        update.remoteHandle = CXHandle(type: .generic, value: "Pete Za")
+        provider.reportNewIncomingCall(with: UUID(), update: update, completion: { error in })
         
         setConstraints()
     }
@@ -66,5 +84,11 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             navigationController?.pushViewController(detailViewontroller, animated: true)
         }
         self.tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+
+extension ViewController: CXProviderDelegate {
+    func providerDidReset(_ provider: CXProvider) {
+        
     }
 }
