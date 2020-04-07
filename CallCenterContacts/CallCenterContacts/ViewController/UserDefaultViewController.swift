@@ -169,25 +169,26 @@ class UserDefaultViewController: UIViewController {
             var value = ["name": "", "number": ""]
             value["name"] = alert.textFields?[0].text
             value["number"] = self.matches(in: alert.textFields?[1].text ?? "")
-            self.contactsData.append(value)
-            
-            if self.totalContactsKey[self.prefixKorean(name: value["name"] ?? "")] == nil {
-                self.setTotalContactsKey()
-                self.tableView.beginUpdates()
-                let sectionNumber = self.contactSectionTitles.firstIndex(of: self.prefixKorean(name: value["name"] ?? "")) ?? 0
-                self.tableView.insertSections(IndexSet(integer: sectionNumber), with: .automatic)
-                self.tableView.insertRows(at: [IndexPath(row: 0, section: sectionNumber)], with: .automatic)
-                self.tableView.endUpdates()
-                UserDefaults.standard.set(self.contactsData, forKey: "userData")
-            } else {
-                self.setTotalContactsKey()
-                let keysValue = self.totalContactsKey[self.prefixKorean(name: value["name"] ?? "")]
-                self.tableView.beginUpdates()
-                self.tableView.insertRows(at: [IndexPath(row: keysValue!.count - 1, section: self.contactSectionTitles.firstIndex(of: self.prefixKorean(name: value["name"] ?? "")) ?? 0)], with: .automatic)
-                self.tableView.endUpdates()
-                UserDefaults.standard.set(self.contactsData, forKey: "userData")
+            if !self.contactsData.contains(value) {
+                self.contactsData.append(value)
+                
+                if self.totalContactsKey[self.prefixKorean(name: value["name"] ?? "")] == nil {
+                    self.setTotalContactsKey()
+                    self.tableView.beginUpdates()
+                    let sectionNumber = self.contactSectionTitles.firstIndex(of: self.prefixKorean(name: value["name"] ?? "")) ?? 0
+                    self.tableView.insertSections(IndexSet(integer: sectionNumber), with: .automatic)
+                    self.tableView.insertRows(at: [IndexPath(row: 0, section: sectionNumber)], with: .automatic)
+                    self.tableView.endUpdates()
+                    UserDefaults.standard.set(self.contactsData, forKey: "userData")
+                } else {
+                    self.setTotalContactsKey()
+                    let keysValue = self.totalContactsKey[self.prefixKorean(name: value["name"] ?? "")]
+                    self.tableView.beginUpdates()
+                    self.tableView.insertRows(at: [IndexPath(row: keysValue!.count - 1, section: self.contactSectionTitles.firstIndex(of: self.prefixKorean(name: value["name"] ?? "")) ?? 0)], with: .automatic)
+                    self.tableView.endUpdates()
+                    UserDefaults.standard.set(self.contactsData, forKey: "userData")
+                }
             }
-            
         }
         let cancel = UIAlertAction(title: "cancel", style: .cancel) { (cancel) in
              //code

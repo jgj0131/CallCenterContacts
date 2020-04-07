@@ -11,7 +11,7 @@ import Intents
 
 class SiriDataManager {
     static let sharedManager = SiriDataManager()
-    static let sharedSuiteName = "group.com.jang-gukjin.CallCenterContacts"
+    static let sharedSuiteName = "group.jang-gukjin.CallCenterContacts"
     
     let userDefaults  = UserDefaults(suiteName: sharedSuiteName)
     

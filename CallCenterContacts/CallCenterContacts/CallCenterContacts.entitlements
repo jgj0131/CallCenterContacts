@@ -6,7 +6,7 @@
 	<true/>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.com.jang-gukjin.CallCenterContacts</string>
+		<string>group.jang-gukjin.CallCenterContacts</string>
 	</array>
 </dict>
 </plist>

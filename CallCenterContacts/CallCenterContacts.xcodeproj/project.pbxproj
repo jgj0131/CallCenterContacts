@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1510EFEA242F66D300E6ECE6 /* CallDirectoryHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1510EFE9242F66D300E6ECE6 /* CallDirectoryHandler.swift */; };
 		1510EFEE242F66D300E6ECE6 /* CallExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 1510EFE7242F66D300E6ECE6 /* CallExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		1510EFF9243CB7AF00E6ECE6 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1510EFF8243CB7AF00E6ECE6 /* TableViewCell.swift */; };
 		15918509241DC4C300D75673 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15918508241DC4C300D75673 /* AppDelegate.swift */; };
 		1591850B241DC4C300D75673 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1591850A241DC4C300D75673 /* SceneDelegate.swift */; };
 		1591850D241DC4C300D75673 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1591850C241DC4C300D75673 /* ViewController.swift */; };
@@ -81,6 +82,7 @@
 		1510EFE9242F66D300E6ECE6 /* CallDirectoryHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallDirectoryHandler.swift; sourceTree = "<group>"; };
 		1510EFEB242F66D300E6ECE6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1510EFF2242F66EE00E6ECE6 /* CallExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CallExtension.entitlements; sourceTree = "<group>"; };
+		1510EFF8243CB7AF00E6ECE6 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		15918505241DC4C300D75673 /* CallCenterContacts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CallCenterContacts.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		15918508241DC4C300D75673 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1591850A241DC4C300D75673 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -167,6 +169,14 @@
 			path = CallExtension;
 			sourceTree = "<group>";
 		};
+		1510EFF7243CB78500E6ECE6 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				1510EFF8243CB7AF00E6ECE6 /* TableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		159184FC241DC4C300D75673 = {
 			isa = PBXGroup;
 			children = (
@@ -196,6 +206,7 @@
 		15918507241DC4C300D75673 /* CallCenterContacts */ = {
 			isa = PBXGroup;
 			children = (
+				1510EFF7243CB78500E6ECE6 /* Cell */,
 				159185492427D2D600D75673 /* CallCenterContacts.entitlements */,
 				1591853F241E779500D75673 /* ViewController */,
 				1591853E241E778B00D75673 /* Delegate */,
@@ -592,6 +603,7 @@
 				1591856F24290B1900D75673 /* SiriDataManager.swift in Sources */,
 				1591850B241DC4C300D75673 /* SceneDelegate.swift in Sources */,
 				15918543241E77EE00D75673 /* DetailViewController.swift in Sources */,
+				1510EFF9243CB7AF00E6ECE6 /* TableViewCell.swift in Sources */,
 				159185452421228E00D75673 /* UserDefaultViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

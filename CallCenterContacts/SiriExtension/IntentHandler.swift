@@ -17,7 +17,13 @@ import Intents
 // "<myApp> John saying hello"
 // "Search for messages in <myApp>"
 
-class IntentHandler: INExtension, INStartCallIntentHandling {
+class IntentHandler: INExtension {    
+    override func handler(for intent: INIntent) -> Any? {
+        return self
+    }
+}
+
+extension IntentHandler: INStartCallIntentHandling {
     
     func handle(intent: INStartCallIntent, completion: @escaping (INStartCallIntentResponse) -> Void) {
         let userActivity = NSUserActivity(activityType: NSStringFromClass(INStartCallIntent.self))
@@ -48,5 +54,4 @@ class IntentHandler: INExtension, INStartCallIntentHandling {
         let response = INStartCallIntentResponse(code: .ready, userActivity: userActivity)
         completion(response)
     }
-    
 }

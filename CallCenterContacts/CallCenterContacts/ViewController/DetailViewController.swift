@@ -20,6 +20,7 @@ class DetailViewController: UIViewController {
     let firestoreCollectionList = ["emergency", "finance", "culture", "civil complaint", "real property", "shopping", "security", "travel", "medical"]
     var listIndex = 0
     private var  contactsData: [[String:Any]] = []
+    private var  userContactsData: [[String:String]] = []
     let searchController = UISearchController(searchResultsController: nil)
     private var filteredContacts = [[String:Any]]()
     private var contactSectionTitles = [String]()
@@ -32,6 +33,7 @@ class DetailViewController: UIViewController {
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.tableView.register(TableViewCell.self, forCellReuseIdentifier: TableViewCell.identifier)
         self.searchController.searchResultsUpdater = self
         self.searchController.obscuresBackgroundDuringPresentation = false
         self.searchController.searchBar.placeholder = "name"
@@ -179,7 +181,10 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        userContactsData = UserDefaults.standard.object(forKey: "userData") as? [[String : String]] ?? []
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.identifier) as? TableViewCell else{
+            return UITableViewCell()
+        }
         cell.selectionStyle = .default
         let contactToDisplay:[String:Any]
         if isFiltering(){
@@ -189,8 +194,17 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
             let contactKey = contactSectionTitles[indexPath.section]
             if let contactValues = totalContactsKey[contactKey] {
                 cell.textLabel?.text = contactValues[indexPath.row]["name"] as? String ?? ""
+                let contactToString = contactValues as? [[String:String]] ?? []
+                if userContactsData.contains(contactToString[indexPath.row]) {
+                    cell.favoriteState = true
+                } else {
+                    cell.favoriteState = false
+                }
+                cell.changeStar(value: cell.favoriteState)
+                cell.setUserDefaults(contacts: userContactsData, value: contactToString[indexPath.row])
             }
         }
+    
         return cell
     }
     
