@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.windowScene = windowScene
         let navigationController = UINavigationController(rootViewController: ViewController())
         navigationController.navigationBar.backgroundColor = .systemBackground
-        navigationController.navigationBar.topItem?.title = "CC Contacts"
+        navigationController.navigationBar.topItem?.title = "CC Book"
         navigationController.navigationBar.prefersLargeTitles = true
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
