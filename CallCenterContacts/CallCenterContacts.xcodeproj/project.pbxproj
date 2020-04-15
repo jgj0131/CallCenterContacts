@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1510EFEA242F66D300E6ECE6 /* CallDirectoryHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1510EFE9242F66D300E6ECE6 /* CallDirectoryHandler.swift */; };
-		1510EFEE242F66D300E6ECE6 /* CallExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 1510EFE7242F66D300E6ECE6 /* CallExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		1510EFF9243CB7AF00E6ECE6 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1510EFF8243CB7AF00E6ECE6 /* TableViewCell.swift */; };
 		15918509241DC4C300D75673 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15918508241DC4C300D75673 /* AppDelegate.swift */; };
 		1591850B241DC4C300D75673 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1591850A241DC4C300D75673 /* SceneDelegate.swift */; };
@@ -31,13 +29,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		1510EFEC242F66D300E6ECE6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 159184FD241DC4C300D75673 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 1510EFE6242F66D300E6ECE6;
-			remoteInfo = CallExtension;
-		};
 		1591851C241DC4C500D75673 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 159184FD241DC4C300D75673 /* Project object */;
@@ -68,7 +59,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				1510EFEE242F66D300E6ECE6 /* CallExtension.appex in Embed App Extensions */,
 				159185662428FD8C00D75673 /* SiriExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
@@ -79,9 +69,6 @@
 /* Begin PBXFileReference section */
 		1510EFE2242F646500E6ECE6 /* SiriExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SiriExtension.entitlements; sourceTree = "<group>"; };
 		1510EFE7242F66D300E6ECE6 /* CallExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CallExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		1510EFE9242F66D300E6ECE6 /* CallDirectoryHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallDirectoryHandler.swift; sourceTree = "<group>"; };
-		1510EFEB242F66D300E6ECE6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1510EFF2242F66EE00E6ECE6 /* CallExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CallExtension.entitlements; sourceTree = "<group>"; };
 		1510EFF8243CB7AF00E6ECE6 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		15918505241DC4C300D75673 /* CallCenterContacts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CallCenterContacts.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		15918508241DC4C300D75673 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -159,16 +146,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1510EFE8242F66D300E6ECE6 /* CallExtension */ = {
-			isa = PBXGroup;
-			children = (
-				1510EFF2242F66EE00E6ECE6 /* CallExtension.entitlements */,
-				1510EFE9242F66D300E6ECE6 /* CallDirectoryHandler.swift */,
-				1510EFEB242F66D300E6ECE6 /* Info.plist */,
-			);
-			path = CallExtension;
-			sourceTree = "<group>";
-		};
 		1510EFF7243CB78500E6ECE6 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -184,7 +161,6 @@
 				1591851E241DC4C500D75673 /* CallCenterContactsTests */,
 				15918529241DC4C500D75673 /* CallCenterContactsUITests */,
 				1591854F2428FD8B00D75673 /* SiriExtension */,
-				1510EFE8242F66D300E6ECE6 /* CallExtension */,
 				15918506241DC4C300D75673 /* Products */,
 				E43BE971E751435E8603F63D /* Pods */,
 				5B8E3C1F84EB4C5CE31171DE /* Frameworks */,
@@ -326,7 +302,6 @@
 			);
 			dependencies = (
 				159185652428FD8C00D75673 /* PBXTargetDependency */,
-				1510EFED242F66D300E6ECE6 /* PBXTargetDependency */,
 			);
 			name = CallCenterContacts;
 			productName = CallCenterContacts;
@@ -590,7 +565,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1510EFEA242F66D300E6ECE6 /* CallDirectoryHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -636,11 +610,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		1510EFED242F66D300E6ECE6 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 1510EFE6242F66D300E6ECE6 /* CallExtension */;
-			targetProxy = 1510EFEC242F66D300E6ECE6 /* PBXContainerItemProxy */;
-		};
 		1591851D241DC4C500D75673 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 15918504241DC4C300D75673 /* CallCenterContacts */;

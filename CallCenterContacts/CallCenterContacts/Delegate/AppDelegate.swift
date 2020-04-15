@@ -9,7 +9,6 @@ import Intents
 import UIKit
 import Firebase
 import FirebaseFirestore
-import CallKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,13 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         let db = Firestore.firestore()
         
-        let callDirManager: Void = CXCallDirectoryManager.sharedInstance.reloadExtension(withIdentifier: "group.com.jang-gukjin.CallCenterContacts"/*"jang-gukjin.CallCenterContacts.CallExtension"*/, completionHandler: { (error) in
-            if (error == nil){
-                    print("success!")
-            }else{
-                print(error)
-            }
-        })
         sleep(2)
         return true
     }
