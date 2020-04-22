@@ -23,6 +23,7 @@
 		159185662428FD8C00D75673 /* SiriExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 1591854E2428FD8B00D75673 /* SiriExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		1591856F24290B1900D75673 /* SiriDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1591856E24290B1900D75673 /* SiriDataManager.swift */; };
 		159185732429197900D75673 /* SiriDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1591856E24290B1900D75673 /* SiriDataManager.swift */; };
+		15F6911E245073FE00D26CFE /* Texts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F6911D245073FE00D26CFE /* Texts.swift */; };
 		2118177AD79E4BAA1C7128F5 /* Pods_CallCenterContacts_CallCenterContactsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA5853D05D59E07DB2A7DF5A /* Pods_CallCenterContacts_CallCenterContactsUITests.framework */; };
 		75BD30925C1BB1166EE49445 /* Pods_CallCenterContacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 647D75871B9B2D89217B7438 /* Pods_CallCenterContacts.framework */; };
 		AB4605777584381803C547E4 /* Pods_CallCenterContactsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3CC71146154A4E2778C403D /* Pods_CallCenterContactsTests.framework */; };
@@ -68,7 +69,6 @@
 
 /* Begin PBXFileReference section */
 		1510EFE2242F646500E6ECE6 /* SiriExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SiriExtension.entitlements; sourceTree = "<group>"; };
-		1510EFE7242F66D300E6ECE6 /* CallExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CallExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		1510EFF8243CB7AF00E6ECE6 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		15918505241DC4C300D75673 /* CallCenterContacts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CallCenterContacts.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		15918508241DC4C300D75673 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -93,6 +93,7 @@
 		159185522428FD8B00D75673 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		159185582428FD8C00D75673 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
 		1591856E24290B1900D75673 /* SiriDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiriDataManager.swift; sourceTree = "<group>"; };
+		15F6911D245073FE00D26CFE /* Texts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Texts.swift; sourceTree = "<group>"; };
 		16F31B9C8E7CA2C0423EF44B /* Pods-CallCenterContacts.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CallCenterContacts.release.xcconfig"; path = "Target Support Files/Pods-CallCenterContacts/Pods-CallCenterContacts.release.xcconfig"; sourceTree = "<group>"; };
 		647D75871B9B2D89217B7438 /* Pods_CallCenterContacts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CallCenterContacts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		79D3E61630E98CD1608EBEF9 /* Pods-CallCenterContactsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CallCenterContactsTests.debug.xcconfig"; path = "Target Support Files/Pods-CallCenterContactsTests/Pods-CallCenterContactsTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -105,13 +106,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		1510EFE4242F66D300E6ECE6 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		15918502241DC4C300D75673 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -174,7 +168,6 @@
 				1591851B241DC4C500D75673 /* CallCenterContactsTests.xctest */,
 				15918526241DC4C500D75673 /* CallCenterContactsUITests.xctest */,
 				1591854E2428FD8B00D75673 /* SiriExtension.appex */,
-				1510EFE7242F66D300E6ECE6 /* CallExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -182,6 +175,7 @@
 		15918507241DC4C300D75673 /* CallCenterContacts */ = {
 			isa = PBXGroup;
 			children = (
+				15F6911C245073EA00D26CFE /* Texts */,
 				1510EFF7243CB78500E6ECE6 /* Cell */,
 				159185492427D2D600D75673 /* CallCenterContacts.entitlements */,
 				1591853F241E779500D75673 /* ViewController */,
@@ -243,6 +237,14 @@
 			path = SiriExtension;
 			sourceTree = "<group>";
 		};
+		15F6911C245073EA00D26CFE /* Texts */ = {
+			isa = PBXGroup;
+			children = (
+				15F6911D245073FE00D26CFE /* Texts.swift */,
+			);
+			path = Texts;
+			sourceTree = "<group>";
+		};
 		5B8E3C1F84EB4C5CE31171DE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -270,23 +272,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1510EFE6242F66D300E6ECE6 /* CallExtension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 1510EFEF242F66D300E6ECE6 /* Build configuration list for PBXNativeTarget "CallExtension" */;
-			buildPhases = (
-				1510EFE3242F66D300E6ECE6 /* Sources */,
-				1510EFE4242F66D300E6ECE6 /* Frameworks */,
-				1510EFE5242F66D300E6ECE6 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = CallExtension;
-			productName = CallExtension;
-			productReference = 1510EFE7242F66D300E6ECE6 /* CallExtension.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
 		15918504241DC4C300D75673 /* CallCenterContacts */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1591852F241DC4C500D75673 /* Build configuration list for PBXNativeTarget "CallCenterContacts" */;
@@ -374,9 +359,6 @@
 				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "jang gukjin";
 				TargetAttributes = {
-					1510EFE6242F66D300E6ECE6 = {
-						CreatedOnToolsVersion = 11.4;
-					};
 					15918504241DC4C300D75673 = {
 						CreatedOnToolsVersion = 11.3.1;
 					};
@@ -410,19 +392,11 @@
 				1591851A241DC4C500D75673 /* CallCenterContactsTests */,
 				15918525241DC4C500D75673 /* CallCenterContactsUITests */,
 				1591854D2428FD8B00D75673 /* SiriExtension */,
-				1510EFE6242F66D300E6ECE6 /* CallExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		1510EFE5242F66D300E6ECE6 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		15918503241DC4C300D75673 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -561,13 +535,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		1510EFE3242F66D300E6ECE6 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		15918501241DC4C300D75673 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -578,6 +545,7 @@
 				1591850B241DC4C300D75673 /* SceneDelegate.swift in Sources */,
 				15918543241E77EE00D75673 /* DetailViewController.swift in Sources */,
 				1510EFF9243CB7AF00E6ECE6 /* TableViewCell.swift in Sources */,
+				15F6911E245073FE00D26CFE /* Texts.swift in Sources */,
 				159185452421228E00D75673 /* UserDefaultViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -647,50 +615,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		1510EFF0242F66D300E6ECE6 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CODE_SIGN_ENTITLEMENTS = CallExtension/CallExtension.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = A6T7UT6A2N;
-				INFOPLIST_FILE = CallExtension/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "jang-gukjin.CallCenterContacts.CallExtension";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		1510EFF1242F66D300E6ECE6 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CODE_SIGN_ENTITLEMENTS = CallExtension/CallExtension.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = A6T7UT6A2N;
-				INFOPLIST_FILE = CallExtension/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "jang-gukjin.CallCenterContacts.CallExtension";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 		1591852D241DC4C500D75673 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -978,15 +902,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1510EFEF242F66D300E6ECE6 /* Build configuration list for PBXNativeTarget "CallExtension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				1510EFF0242F66D300E6ECE6 /* Debug */,
-				1510EFF1242F66D300E6ECE6 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		15918500241DC4C300D75673 /* Build configuration list for PBXProject "CallCenterContacts" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

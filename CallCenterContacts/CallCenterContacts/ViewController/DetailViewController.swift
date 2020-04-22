@@ -15,6 +15,16 @@ class DetailViewController: UIViewController {
 
     // MARK: UI Property
     lazy var tableView = UITableView()
+    lazy var titleImage: UIImageView = {
+        let title = UIImageView()
+        title.image = UIImage(named: "titleImage")
+        title.translatesAutoresizingMaskIntoConstraints = false
+        title.frame.size = CGSize(width: 40, height: 40)
+        title.layer.masksToBounds = false
+        title.layer.cornerRadius = title.frame.width / 2
+        title.clipsToBounds = true
+        return title
+    }()
     
     // MARK: Property
     let firestoreCollectionList = ["emergency", "finance", "culture", "civil complaint", "real property", "shopping", "security", "travel", "medical"]
@@ -36,11 +46,7 @@ class DetailViewController: UIViewController {
         self.tableView.register(TableViewCell.self, forCellReuseIdentifier: TableViewCell.identifier)
         self.searchController.searchResultsUpdater = self
         self.searchController.obscuresBackgroundDuringPresentation = false
-        self.searchController.searchBar.placeholder = "name"
-
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
-        definesPresentationContext = true
+        self.searchController.searchBar.placeholder = Texts.name.rawValue
         
         // MARK: Firstore - read Data
         let db = Firestore.firestore()
@@ -72,16 +78,51 @@ class DetailViewController: UIViewController {
         }
         
         setConstraints()
+        setNavigationBarItems()
     }
             
+    override func viewWillDisappear(_ animated: Bool) {
+        titleImage.removeFromSuperview()
+    }
+    
     // MARK: Custom Method
     func setConstraints() {
         self.view.addSubview(tableView)
         
+        tableView.tableFooterView = UIView(frame: .zero)
         tableView.snp.makeConstraints{ (make) in
             make.width.height.equalTo(self.view.safeAreaLayoutGuide)
             make.center.equalTo(self.view.safeAreaLayoutGuide)
         }
+    }
+    
+    private func setNavigationBarItems() {
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        definesPresentationContext = true
+        
+        let targetView = self.navigationController?.navigationBar
+        targetView?.addSubview(self.titleImage)
+        titleImage.centerXAnchor.constraint(equalTo: (targetView?.centerXAnchor)!).isActive = true
+        titleImage.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        titleImage.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        
+        
+        let buttonIcon = UIImage(named: "back")
+        let buttonIconSize = CGRect(origin: CGPoint.zero, size: CGSize(width: 5, height: 5))
+        let button = UIButton(frame: buttonIconSize)
+        button.setBackgroundImage(buttonIcon, for: .normal)
+        let barButton = UIBarButtonItem(customView: button)
+        button.addTarget(self, action: #selector(popView(_:)), for: .touchUpInside)
+        barButton.customView?.heightAnchor.constraint(equalToConstant: 15).isActive = true
+        barButton.customView?.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        navigationItem.leftBarButtonItem = barButton
+    }
+    
+    /// navigationController에서 pop하는 메소드
+    @objc
+    func popView(_ sender: UIButton) {
+        navigationController?.popViewController(animated: true)
     }
     
     /// 이름을 받아 한글인 경우 맨 앞글자의 초성을 따오는 메소드

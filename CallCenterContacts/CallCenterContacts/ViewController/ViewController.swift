@@ -43,6 +43,7 @@ class ViewController: UIViewController {
     func setConstraints() {
         self.view.addSubview(tableView)
         
+        tableView.tableFooterView = UIView(frame: .zero)
         tableView.snp.makeConstraints{ (make) in
             make.width.height.equalTo(self.view.safeAreaLayoutGuide)
             make.center.equalTo(self.view.safeAreaLayoutGuide)

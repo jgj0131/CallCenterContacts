@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.windowScene = windowScene
         let navigationController = UINavigationController(rootViewController: ViewController())
         navigationController.navigationBar.backgroundColor = .systemBackground
-        navigationController.navigationBar.topItem?.title = "CC Book"
+        navigationController.navigationBar.topItem?.title = Texts.title.rawValue
         navigationController.navigationBar.prefersLargeTitles = true
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
@@ -80,8 +80,8 @@ extension SceneDelegate {
                 if UIApplication.shared.canOpenURL(callUrl!) {
                     UIApplication.shared.open(callUrl!, options: [:], completionHandler: nil)
                 } else {
-                    let alertController = UIAlertController(title: nil , message: "Calling not supported", preferredStyle: .alert)
-                    let okAlertAction = UIAlertAction(title: "Ok" , style: UIAlertAction.Style.default, handler:nil)
+                    let alertController = UIAlertController(title: nil , message: Texts.callingNotSupport.rawValue, preferredStyle: .alert)
+                    let okAlertAction = UIAlertAction(title: Texts.confirm.rawValue , style: UIAlertAction.Style.default, handler:nil)
                     alertController.addAction(okAlertAction)
                     self.window?.rootViewController?.present(alertController, animated: true, completion: nil)
                 }

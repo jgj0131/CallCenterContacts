@@ -15,9 +15,15 @@ class UserDefaultViewController: UIViewController {
 
     // MARK: UI Property
     lazy var tableView = UITableView()
-    lazy var insertButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertRow(_:)))
-        return button
+    lazy var titleImage: UIImageView = {
+        let title = UIImageView()
+        title.image = UIImage(named: "titleImage")
+        title.translatesAutoresizingMaskIntoConstraints = false
+        title.frame.size = CGSize(width: 40, height: 40)
+        title.layer.masksToBounds = false
+        title.layer.cornerRadius = title.frame.width / 2
+        title.clipsToBounds = true
+        return title
     }()
     
     // MARK: Property
@@ -36,29 +42,67 @@ class UserDefaultViewController: UIViewController {
         self.tableView.dataSource = self
         self.searchController.searchResultsUpdater = self
         self.searchController.obscuresBackgroundDuringPresentation = false
-        self.searchController.searchBar.placeholder = "name"
-        
+        self.searchController.searchBar.placeholder = Texts.name.rawValue
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "userCell")
-        
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
-        navigationItem.rightBarButtonItem = self.insertButton
-        definesPresentationContext = true
         
         contactsData = UserDefaults.standard.object(forKey: "userData") as? [[String : String]] ?? []
         
         setTotalContactsKey()
         setConstraints()
+        setNavigationBarItems()
     }
             
+    override func viewWillDisappear(_ animated: Bool) {
+        titleImage.removeFromSuperview()
+    }
+    
     // MARK: Custom Method
     func setConstraints() {
         self.view.addSubview(tableView)
         
+        tableView.tableFooterView = UIView(frame: .zero)
         tableView.snp.makeConstraints{ (make) in
             make.width.height.equalTo(self.view.safeAreaLayoutGuide)
             make.center.equalTo(self.view.safeAreaLayoutGuide)
         }
+    }
+    
+    private func setNavigationBarItems() {
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        definesPresentationContext = true
+        let targetView = self.navigationController?.navigationBar
+        targetView?.addSubview(self.titleImage)
+        titleImage.centerXAnchor.constraint(equalTo: (targetView?.centerXAnchor)!).isActive = true
+        titleImage.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        titleImage.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        
+        let editButtonIcon = UIImage(named: "insert")
+        let editButtonIconSize = CGRect(origin: CGPoint.zero, size: CGSize(width: 5, height: 5))
+        let editButton = UIButton(frame: editButtonIconSize)
+        editButton.setBackgroundImage(editButtonIcon, for: .normal)
+        let barEditButton = UIBarButtonItem(customView: editButton)
+        editButton.addTarget(self, action: #selector(insertRow(_:)), for: .touchUpInside)
+        barEditButton.customView?.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        barEditButton.customView?.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        
+        let backButtonIcon = UIImage(named: "back")
+        let backButtonIconSize = CGRect(origin: CGPoint.zero, size: CGSize(width: 5, height: 5))
+        let backButton = UIButton(frame: backButtonIconSize)
+        backButton.setBackgroundImage(backButtonIcon, for: .normal)
+        let barBackButton = UIBarButtonItem(customView: backButton)
+        backButton.addTarget(self, action: #selector(popView(_:)), for: .touchUpInside)
+        barBackButton.customView?.heightAnchor.constraint(equalToConstant: 15).isActive = true
+        barBackButton.customView?.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        
+        navigationItem.rightBarButtonItem = barEditButton
+        navigationItem.leftBarButtonItem = barBackButton
+    }
+    
+    /// navigationController에서 pop하는 메소드
+    @objc
+    func popView(_ sender: UIButton) {
+        navigationController?.popViewController(animated: true)
     }
     
     /// 전화번호부 데이터를 초성 키에 맞게 나누는 메소드
@@ -158,14 +202,14 @@ class UserDefaultViewController: UIViewController {
     /// Row를 추가하는 메소드
     @objc
     func insertRow(_ sender: Any) {
-        let alert = UIAlertController(title: "추가하기", message: "이름과 번호를 입력하세요", preferredStyle: .alert)
+        let alert = UIAlertController(title: Texts.alertTitle.rawValue, message: Texts.alertContents.rawValue, preferredStyle: .alert)
         alert.addTextField { (name) in
-            name.placeholder = "name"
+            name.placeholder = Texts.name.rawValue
         }
         alert.addTextField { (number) in
-            number.placeholder = "number"
+            number.placeholder = Texts.number.rawValue
         }
-        let ok = UIAlertAction(title: "OK", style: .default) { (ok) in
+        let ok = UIAlertAction(title: Texts.confirm.rawValue, style: .default) { (ok) in
             var value = ["name": "", "number": ""]
             value["name"] = alert.textFields?[0].text
             value["number"] = self.matches(in: alert.textFields?[1].text ?? "")
@@ -190,7 +234,7 @@ class UserDefaultViewController: UIViewController {
                 }
             }
         }
-        let cancel = UIAlertAction(title: "cancel", style: .cancel) { (cancel) in
+        let cancel = UIAlertAction(title: Texts.cancle.rawValue, style: .cancel) { (cancel) in
              //code
         }
         alert.addAction(cancel)
