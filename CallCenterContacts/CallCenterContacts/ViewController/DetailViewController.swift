@@ -15,14 +15,12 @@ class DetailViewController: UIViewController {
 
     // MARK: UI Property
     lazy var tableView = UITableView()
-    lazy var titleImage: UIImageView = {
-        let title = UIImageView()
-        title.image = UIImage(named: "titleImage")
+    lazy var titleLabel: UILabel = {
+        let title = UILabel()
+        title.text = Texts.title.rawValue
+        title.textColor = .label
+        title.font = UIFont.boldSystemFont(ofSize: 20)
         title.translatesAutoresizingMaskIntoConstraints = false
-        title.frame.size = CGSize(width: 40, height: 40)
-        title.layer.masksToBounds = false
-        title.layer.cornerRadius = title.frame.width / 2
-        title.clipsToBounds = true
         return title
     }()
     
@@ -82,7 +80,7 @@ class DetailViewController: UIViewController {
     }
             
     override func viewWillDisappear(_ animated: Bool) {
-        titleImage.removeFromSuperview()
+        titleLabel.removeFromSuperview()
     }
     
     // MARK: Custom Method
@@ -102,10 +100,9 @@ class DetailViewController: UIViewController {
         definesPresentationContext = true
         
         let targetView = self.navigationController?.navigationBar
-        targetView?.addSubview(self.titleImage)
-        titleImage.centerXAnchor.constraint(equalTo: (targetView?.centerXAnchor)!).isActive = true
-        titleImage.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        titleImage.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        targetView?.addSubview(titleLabel)
+        titleLabel.centerXAnchor.constraint(equalTo: (targetView?.centerXAnchor)!).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: (targetView?.topAnchor)!, constant: 10).isActive = true
         
         
         let buttonIcon = UIImage(named: "back")

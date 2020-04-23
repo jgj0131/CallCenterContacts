@@ -15,14 +15,12 @@ class UserDefaultViewController: UIViewController {
 
     // MARK: UI Property
     lazy var tableView = UITableView()
-    lazy var titleImage: UIImageView = {
-        let title = UIImageView()
-        title.image = UIImage(named: "titleImage")
+    lazy var titleLabel: UILabel = {
+        let title = UILabel()
+        title.text = Texts.title.rawValue
+        title.textColor = .label
+        title.font = UIFont.boldSystemFont(ofSize: 20)
         title.translatesAutoresizingMaskIntoConstraints = false
-        title.frame.size = CGSize(width: 40, height: 40)
-        title.layer.masksToBounds = false
-        title.layer.cornerRadius = title.frame.width / 2
-        title.clipsToBounds = true
         return title
     }()
     
@@ -46,6 +44,7 @@ class UserDefaultViewController: UIViewController {
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "userCell")
         
         contactsData = UserDefaults.standard.object(forKey: "userData") as? [[String : String]] ?? []
+        contactsData.sort(by: { $0["name"] ?? "" < $1["name"] ?? "" })
         
         setTotalContactsKey()
         setConstraints()
@@ -53,7 +52,7 @@ class UserDefaultViewController: UIViewController {
     }
             
     override func viewWillDisappear(_ animated: Bool) {
-        titleImage.removeFromSuperview()
+        titleLabel.removeFromSuperview()
     }
     
     // MARK: Custom Method
@@ -72,10 +71,9 @@ class UserDefaultViewController: UIViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
         definesPresentationContext = true
         let targetView = self.navigationController?.navigationBar
-        targetView?.addSubview(self.titleImage)
-        titleImage.centerXAnchor.constraint(equalTo: (targetView?.centerXAnchor)!).isActive = true
-        titleImage.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        titleImage.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        targetView?.addSubview(titleLabel)
+        titleLabel.centerXAnchor.constraint(equalTo: (targetView?.centerXAnchor)!).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: (targetView?.topAnchor)!, constant: 10).isActive = true
         
         let editButtonIcon = UIImage(named: "insert")
         let editButtonIconSize = CGRect(origin: CGPoint.zero, size: CGSize(width: 5, height: 5))

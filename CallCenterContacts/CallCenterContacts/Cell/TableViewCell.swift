@@ -52,7 +52,7 @@ class TableViewCell: UITableViewCell {
         if favoriteState == false {
             favoriteStarButton.setImage(UIImage(named: "favorite_off"), for: .normal)
         } else {
-            favoriteStarButton.setImage(UIImage(named: "favorite_on"), for: .normal)
+            favoriteStarButton.setImage(UIImage(named: "greenStar"), for: .normal)
         }
         favoriteStarButton.snp.makeConstraints{ (make) in
             make.centerY.equalTo(self)
@@ -65,7 +65,7 @@ class TableViewCell: UITableViewCell {
     /// favoriteState에 따라 별 색깔을 다르게하는 메소드
     func changeStar(value: Bool) {
         if value == true {
-            favoriteStarButton.setImage(UIImage(named: "favorite_on"), for: .normal)
+            favoriteStarButton.setImage(UIImage(named: "greenStar"), for: .normal)
         } else {
             favoriteStarButton.setImage(UIImage(named: "favorite_off"), for: .normal)
         }
