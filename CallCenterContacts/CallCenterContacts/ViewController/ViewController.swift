@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Intents
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIGestureRecognizerDelegate {
 
     // MARK: UI Property
     lazy var tableView = UITableView()
@@ -25,6 +25,7 @@ class ViewController: UIViewController {
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
         
         INPreferences.requestSiriAuthorization { (status) in
             if status == .authorized {

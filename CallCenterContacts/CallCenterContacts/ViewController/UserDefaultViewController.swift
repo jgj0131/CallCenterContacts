@@ -70,6 +70,7 @@ class UserDefaultViewController: UIViewController {
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         definesPresentationContext = true
+        
         let targetView = self.navigationController?.navigationBar
         targetView?.addSubview(titleLabel)
         titleLabel.centerXAnchor.constraint(equalTo: (targetView?.centerXAnchor)!).isActive = true
