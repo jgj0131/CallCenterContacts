@@ -40,6 +40,7 @@ class UserDefaultViewController: UIViewController {
         self.tableView.dataSource = self
         self.searchController.searchResultsUpdater = self
         self.searchController.obscuresBackgroundDuringPresentation = false
+        self.searchController.hidesNavigationBarDuringPresentation = false
         self.searchController.searchBar.placeholder = Texts.name.rawValue
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "userCell")
         

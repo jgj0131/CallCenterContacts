@@ -63,20 +63,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 extension SceneDelegate {
     func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
-        let audioCallIntent = userActivity.interaction?.intent as! INStartCallIntent
-//        guard let audioCallIntent = userActivity.interaction?.intent as? INStartCallIntent else {
-//            return false
-//        }
+//        let audioCallIntent = userActivity.interaction?.intent as! INStartCallIntent
+        guard let audioCallIntent = userActivity.interaction?.intent as? INStartCallIntent else {
+            return 
+        }
         if let contact = audioCallIntent.contacts?.first {
             
             if let type = contact.personHandle?.type, type == .phoneNumber {
 
-                let callNumber = contact.personHandle?.value
-//                guard let callNumber = contact.personHandle?.value else {
-//                    return false
-//                }
+//                let callNumber = contact.personHandle?.value
+                guard let callNumber = contact.personHandle?.value else {
+                    return
+                }
 
-                let callUrl = URL(string: "tel://\(callNumber!)")
+                let callUrl = URL(string: "tel://\(callNumber)")
                 if UIApplication.shared.canOpenURL(callUrl!) {
                     UIApplication.shared.open(callUrl!, options: [:], completionHandler: nil)
                 } else {

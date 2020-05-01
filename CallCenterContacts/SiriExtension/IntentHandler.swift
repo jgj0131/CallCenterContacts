@@ -51,7 +51,6 @@ extension IntentHandler: INStartCallIntentHandling {
     
     func confirm(intent: INStartCallIntent, completion: @escaping (INStartCallIntentResponse) -> Void) {
         let userActivity = NSUserActivity(activityType: NSStringFromClass(INStartCallIntent.self))
-        print(userActivity)
         let response = INStartCallIntentResponse(code: .ready, userActivity: userActivity)
         completion(response)
     }

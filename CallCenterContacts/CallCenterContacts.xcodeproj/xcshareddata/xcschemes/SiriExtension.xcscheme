@@ -47,7 +47,7 @@
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
-      intentQueryString = "Call kevin using CallCenterContacts"
+      intentQueryString = "&#xc2e0;&#xd55c;&#xc5d0; &#xcf5c;&#xc13c;&#xd130;&#xbd81;&#xc73c;&#xb85c; &#xc804;&#xd654;&#xac78;&#xc5b4;&#xc918;"
       selectedDebuggerIdentifier = ""
       selectedLauncherIdentifier = "Xcode.IDEFoundation.Launcher.PosixSpawn"
       launchStyle = "0"
@@ -81,7 +81,7 @@
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
-      intentQueryString = "Call kevin using CallCenterContacts"
+      intentQueryString = "&#xc2e0;&#xd55c;&#xc5d0; &#xcf5c;&#xc13c;&#xd130;&#xbd81;&#xc73c;&#xb85c; &#xc804;&#xd654;&#xac78;&#xc5b4;&#xc918;"
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"

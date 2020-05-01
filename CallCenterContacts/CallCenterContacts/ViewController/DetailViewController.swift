@@ -44,6 +44,7 @@ class DetailViewController: UIViewController {
         self.tableView.register(TableViewCell.self, forCellReuseIdentifier: TableViewCell.identifier)
         self.searchController.searchResultsUpdater = self
         self.searchController.obscuresBackgroundDuringPresentation = false
+        self.searchController.hidesNavigationBarDuringPresentation = false
         self.searchController.searchBar.placeholder = Texts.name.rawValue
         
         // MARK: Firstore - read Data

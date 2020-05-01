@@ -70,7 +70,7 @@
 /* Begin PBXFileReference section */
 		1510EFE2242F646500E6ECE6 /* SiriExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SiriExtension.entitlements; sourceTree = "<group>"; };
 		1510EFF8243CB7AF00E6ECE6 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
-		15918505241DC4C300D75673 /* CallCenterContacts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CallCenterContacts.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		15918505241DC4C300D75673 /* 콜센터북.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "콜센터북.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		15918508241DC4C300D75673 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1591850A241DC4C300D75673 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		1591850C241DC4C300D75673 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -164,7 +164,7 @@
 		15918506241DC4C300D75673 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				15918505241DC4C300D75673 /* CallCenterContacts.app */,
+				15918505241DC4C300D75673 /* 콜센터북.app */,
 				1591851B241DC4C500D75673 /* CallCenterContactsTests.xctest */,
 				15918526241DC4C500D75673 /* CallCenterContactsUITests.xctest */,
 				1591854E2428FD8B00D75673 /* SiriExtension.appex */,
@@ -290,7 +290,7 @@
 			);
 			name = CallCenterContacts;
 			productName = CallCenterContacts;
-			productReference = 15918505241DC4C300D75673 /* CallCenterContacts.app */;
+			productReference = 15918505241DC4C300D75673 /* 콜센터북.app */;
 			productType = "com.apple.product-type.application";
 		};
 		1591851A241DC4C500D75673 /* CallCenterContactsTests */ = {
@@ -744,7 +744,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "jang-gukjin.CallCenterContacts";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "콜센터북";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -765,7 +765,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "jang-gukjin.CallCenterContacts";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "콜센터북";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
