@@ -210,10 +210,16 @@ class UserDefaultViewController: UIViewController {
             number.placeholder = Texts.number.rawValue
         }
         let ok = UIAlertAction(title: Texts.confirm.rawValue, style: .default) { (ok) in
+            var overlapState = false
             var value = ["name": "", "number": ""]
             value["name"] = alert.textFields?[0].text
             value["number"] = self.matches(in: alert.textFields?[1].text ?? "")
-            if !self.contactsData.contains(value) {
+            for data in self.contactsData {
+                if data["name"]?.lowercased() == value["name"]?.lowercased() {
+                    overlapState = true
+                }
+            }
+            if !self.contactsData.contains(value), overlapState == false {
                 self.contactsData.append(value)
                 
                 if self.totalContactsKey[self.prefixKorean(name: value["name"] ?? "")] == nil {
@@ -232,6 +238,12 @@ class UserDefaultViewController: UIViewController {
                     self.tableView.endUpdates()
                     UserDefaults.standard.set(self.contactsData, forKey: "userData")
                 }
+            } else {
+                let overlapAlert = UIAlertController(title: Texts.overlap.rawValue, message: Texts.overlapMessage.rawValue, preferredStyle: .alert)
+                let confirm = UIAlertAction(title: Texts.confirm.rawValue, style: .cancel) { (cancle) in
+                }
+                overlapAlert.addAction(confirm)
+                self.present(overlapAlert, animated: true, completion: nil)
             }
         }
         let cancel = UIAlertAction(title: Texts.cancle.rawValue, style: .cancel) { (cancel) in
