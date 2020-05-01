@@ -212,9 +212,12 @@ class UserDefaultViewController: UIViewController {
         let ok = UIAlertAction(title: Texts.confirm.rawValue, style: .default) { (ok) in
             var overlapState = false
             var value = ["name": "", "number": ""]
+            let userDefaults  = UserDefaults(suiteName: SiriDataManager.sharedSuiteName)
+            let savedContacts = userDefaults?.object(forKey: SiriDataManager.sharedSuiteName) as? [[String: String]] ?? []
+            
             value["name"] = alert.textFields?[0].text
             value["number"] = self.matches(in: alert.textFields?[1].text ?? "")
-            for data in self.contactsData {
+            for data in savedContacts {
                 if data["name"]?.lowercased() == value["name"]?.lowercased() {
                     overlapState = true
                 }

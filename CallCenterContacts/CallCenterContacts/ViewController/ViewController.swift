@@ -8,6 +8,8 @@
 
 import UIKit
 import SnapKit
+import Firebase
+import FirebaseFirestore
 import Intents
 
 class ViewController: UIViewController, UIGestureRecognizerDelegate {
@@ -17,6 +19,9 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: Property
     let contactsList = ["긴급", "금융", "문화", "민원", "부동산", "쇼핑", "안보", "여행", "의료", "추가등록"]
+    let firestoreCollectionList = ["emergency", "finance", "culture", "civil complaint", "real property", "shopping", "security", "travel", "medical"]
+    private var contactsData: [[String:Any]] = []
+    private var userData: [[String:String]] = []
     
     // MARK: Life Cycle
     override func viewDidLoad() {
@@ -34,9 +39,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
                 print("Siri access denied")
             }
         }
-        
-        SiriDataManager.sharedManager.saveContacts(contacts: UserDefaults.standard.object(forKey: "userData") as? [[String : String]] ?? [])
-                
+        setFireStoreData()
         setConstraints()
     }
     
@@ -48,6 +51,28 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         tableView.snp.makeConstraints{ (make) in
             make.width.height.equalTo(self.view.safeAreaLayoutGuide)
             make.center.equalTo(self.view.safeAreaLayoutGuide)
+        }
+    }
+    
+    func setFireStoreData() {
+        let db = Firestore.firestore()
+        for index in 0..<firestoreCollectionList.count {
+            db.collection(firestoreCollectionList[index]).getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    for document in querySnapshot!.documents {
+                        self.contactsData.append(document.data())
+                    }
+                    self.contactsData.sort{( $0["name"] as! String) < ($1["name"] as! String) }
+                }
+                self.userData = UserDefaults.standard.object(forKey: "userData") as? [[String : String]] ?? []
+                let contactsStringData = self.contactsData as? [[String:String]] ?? []
+                let datas = contactsStringData + self.userData
+                let setDatas = Set(datas)
+                print("\(Array(setDatas))")
+                SiriDataManager.sharedManager.saveContacts(contacts: Array(setDatas))
+            }
         }
     }
 }

@@ -47,35 +47,7 @@ class DetailViewController: UIViewController {
         self.searchController.hidesNavigationBarDuringPresentation = false
         self.searchController.searchBar.placeholder = Texts.name.rawValue
         
-        // MARK: Firstore - read Data
-        let db = Firestore.firestore()
-        db.collection(firestoreCollectionList[listIndex]).getDocuments() { (querySnapshot, err) in
-            if let err = err {
-                print("Error getting documents: \(err)")
-            } else {
-                for document in querySnapshot!.documents {
-                    print("\(document.documentID) => \(document.data())")
-                    self.contactsData.append(document.data())
-                }
-                print(self.contactsData)
-                self.contactsData.sort{( $0["name"] as! String) < ($1["name"] as! String) }
-            }
-            for contact in self.contactsData {
-                let contactName = contact["name"] as? String ?? ""
-                let contactKey = self.prefixKorean(name: contactName)
-                if var contactValues = self.totalContactsKey[contactKey] {
-                    contactValues.append(contact)
-                    self.totalContactsKey[contactKey] = contactValues
-                } else {
-                    self.totalContactsKey[contactKey] = [contact]
-                }
-            }
-            self.contactSectionTitles = [String](self.totalContactsKey.keys)
-            self.contactSectionTitles = self.contactSectionTitles.sorted(by: { $0 < $1 })
-    
-            self.tableView.reloadData()
-        }
-        
+        setFirestoreData()
         setConstraints()
         setNavigationBarItems()
     }
@@ -136,6 +108,37 @@ class DetailViewController: UIViewController {
             } else {
                 return ""
             }
+        }
+    }
+    
+    // MARK: Firstore - read Data
+    private func setFirestoreData() {
+        let db = Firestore.firestore()
+        db.collection(firestoreCollectionList[listIndex]).getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                for document in querySnapshot!.documents {
+                    print("\(document.documentID) => \(document.data())")
+                    self.contactsData.append(document.data())
+                }
+                print(self.contactsData)
+                self.contactsData.sort{( $0["name"] as! String) < ($1["name"] as! String) }
+            }
+            for contact in self.contactsData {
+                let contactName = contact["name"] as? String ?? ""
+                let contactKey = self.prefixKorean(name: contactName)
+                if var contactValues = self.totalContactsKey[contactKey] {
+                    contactValues.append(contact)
+                    self.totalContactsKey[contactKey] = contactValues
+                } else {
+                    self.totalContactsKey[contactKey] = [contact]
+                }
+            }
+            self.contactSectionTitles = [String](self.totalContactsKey.keys)
+            self.contactSectionTitles = self.contactSectionTitles.sorted(by: { $0 < $1 })
+    
+            self.tableView.reloadData()
         }
     }
     
