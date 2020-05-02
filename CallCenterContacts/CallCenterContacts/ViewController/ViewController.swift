@@ -70,7 +70,6 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
                 let contactsStringData = self.contactsData as? [[String:String]] ?? []
                 let datas = contactsStringData + self.userData
                 let setDatas = Set(datas)
-                print("\(Array(setDatas))")
                 SiriDataManager.sharedManager.saveContacts(contacts: Array(setDatas))
             }
         }

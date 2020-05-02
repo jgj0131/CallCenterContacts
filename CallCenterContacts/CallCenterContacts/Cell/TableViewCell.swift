@@ -56,7 +56,7 @@ class TableViewCell: UITableViewCell {
         }
         favoriteStarButton.snp.makeConstraints{ (make) in
             make.centerY.equalTo(self)
-            make.width.height.equalTo(self.snp.height).multipliedBy(0.4)
+            make.width.height.equalTo(self.snp.height).multipliedBy(0.45)
             make.right.equalTo(self).multipliedBy(0.9)
         }
         favoriteStarButton.addTarget(self, action:#selector(touchUpFavorite(_:)), for: .touchUpInside)
@@ -79,14 +79,15 @@ class TableViewCell: UITableViewCell {
     
     @objc
     func touchUpFavorite(_ sender: UIButton) {
-        if favoriteState == false {
-            changeStar(value: true)
+        favoriteState = !favoriteState
+        if favoriteState == true {
+            changeStar(value: favoriteState)
             if !favoriteContacts.contains(favoriteContact) {
                 favoriteContacts.append(favoriteContact)
                 UserDefaults.standard.set(favoriteContacts, forKey: "userData")
             }
         } else {
-            changeStar(value: false)
+            changeStar(value: favoriteState)
             if favoriteContacts.contains(favoriteContact) {
                 if let index = favoriteContacts.firstIndex(of: favoriteContact) {
                     favoriteContacts.remove(at: index)

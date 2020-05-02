@@ -40,37 +40,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
 }
 
-//extension AppDelegate {
-//
-//    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
-//
-//        guard let audioCallIntent = userActivity.interaction?.intent as? INStartCallIntent else {
-//            return false
-//        }
-//
-//        if let contact = audioCallIntent.contacts?.first {
-//
-//            if let type = contact.personHandle?.type, type == .phoneNumber {
-//
-//                guard let callNumber = contact.personHandle?.value else {
-//                    return false
-//                }
-//
-//                let callUrl = URL(string: "tel://\(callNumber)")
-//
-//                if UIApplication.shared.canOpenURL(callUrl!) {
-//                    UIApplication.shared.open(callUrl!, options: [:], completionHandler: nil)
-//                } else {
-//
-//                    let alertController = UIAlertController(title: nil , message: "Calling not supported", preferredStyle: .alert)
-//                    let okAlertAction = UIAlertAction(title: "Ok" , style: UIAlertAction.Style.default, handler:nil)
-//                    alertController.addAction(okAlertAction)
-//                    self.window?.rootViewController?.present(alertController, animated: true, completion: nil)
-//                }
-//            }
-//        }
-//
-//        return true
-//    }
-//}
-//
