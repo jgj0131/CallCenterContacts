@@ -31,6 +31,12 @@ class UserDefaultViewController: UIViewController {
     private var contactSectionTitles = [String]()
     private var totalContactsKey = [String:[[String:String]]]()
     let prefixs: [String:[UInt32]] = ["ㄱ": [4352, 12593], "ㄲ": [4353, 12594], "ㄴ": [4354, 12596], "ㄷ": [4355, 12599], "ㄸ": [4356, 12600], "ㄹ": [4357, 12601], "ㅁ":[4358, 12609], "ㅂ": [4359, 12610], "ㅃ": [4360, 12611], "ㅅ": [4361, 12613], "ㅆ": [4362, 12614], "ㅇ": [4363, 12615], "ㅈ": [4364, 12616], "ㅉ": [4365, 12617], "ㅊ": [4366, 12618], "ㅋ": [4367, 12619], "ㅌ": [4368, 12620], "ㅍ": [4368, 12621], "ㅎ": [4370, 12622]]
+
+    enum overlapState {
+        case notOverlap
+        case anotheListOverlap
+        case userDataOverlap
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -210,7 +216,7 @@ class UserDefaultViewController: UIViewController {
             number.placeholder = Texts.number.rawValue
         }
         let ok = UIAlertAction(title: Texts.confirm.rawValue, style: .default) { (ok) in
-            var overlapState = false
+            var overlapState: overlapState = .notOverlap
             var value = ["name": "", "number": ""]
             let userDefaults  = UserDefaults(suiteName: SiriDataManager.sharedSuiteName)
             let savedContacts = userDefaults?.object(forKey: SiriDataManager.sharedSuiteName) as? [[String: String]] ?? []
@@ -219,10 +225,16 @@ class UserDefaultViewController: UIViewController {
             value["number"] = self.matches(in: alert.textFields?[1].text ?? "")
             for data in savedContacts {
                 if data["name"]?.lowercased() == value["name"]?.lowercased() {
-                    overlapState = true
+                    overlapState = .anotheListOverlap
                 }
             }
-            if !self.contactsData.contains(value), overlapState == false {
+            
+            for data in self.contactsData {
+                if data["name"]?.lowercased() == value["name"]?.lowercased() {
+                    overlapState = .userDataOverlap
+                }
+            }
+            if !self.contactsData.contains(value), overlapState == .notOverlap {
                 self.contactsData.append(value)
                 
                 if self.totalContactsKey[self.prefixKorean(name: value["name"] ?? "")] == nil {
@@ -241,6 +253,12 @@ class UserDefaultViewController: UIViewController {
                     self.tableView.endUpdates()
                     UserDefaults.standard.set(self.contactsData, forKey: "userData")
                 }
+            } else if overlapState == .anotheListOverlap {
+                let overlapAlert = UIAlertController(title: Texts.anotherListOverlapTitle.rawValue, message: Texts.anotherListOverlapMessage.rawValue, preferredStyle: .alert)
+                let confirm = UIAlertAction(title: Texts.confirm.rawValue, style: .cancel) { (cancle) in
+                }
+                overlapAlert.addAction(confirm)
+                self.present(overlapAlert, animated: true, completion: nil)
             } else {
                 let overlapAlert = UIAlertController(title: Texts.overlap.rawValue, message: Texts.overlapMessage.rawValue, preferredStyle: .alert)
                 let confirm = UIAlertAction(title: Texts.confirm.rawValue, style: .cancel) { (cancle) in
