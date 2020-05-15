@@ -119,10 +119,8 @@ class DetailViewController: UIViewController {
                 print("Error getting documents: \(err)")
             } else {
                 for document in querySnapshot!.documents {
-                    print("\(document.documentID) => \(document.data())")
                     self.contactsData.append(document.data())
                 }
-                print(self.contactsData)
                 self.contactsData.sort{( $0["name"] as! String) < ($1["name"] as! String) }
             }
             for contact in self.contactsData {

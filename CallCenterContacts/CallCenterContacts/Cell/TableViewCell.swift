@@ -13,6 +13,7 @@ class TableViewCell: UITableViewCell {
 
     // MARK: UI Property
     lazy var favoriteStarButton = UIButton()
+    lazy var homepageButton = UIButton()
     
     // MARK: Property
     static var identifier: String = "TableViewCell"
@@ -48,6 +49,7 @@ class TableViewCell: UITableViewCell {
     // MARK: Custom Method
     func setConstraint() {
         self.contentView.addSubview(favoriteStarButton)
+        self.contentView.addSubview(homepageButton)
         
         if favoriteState == false {
             favoriteStarButton.setImage(UIImage(named: "favorite_off"), for: .normal)
@@ -60,6 +62,14 @@ class TableViewCell: UITableViewCell {
             make.right.equalTo(self).multipliedBy(0.9)
         }
         favoriteStarButton.addTarget(self, action:#selector(touchUpFavorite(_:)), for: .touchUpInside)
+        
+        homepageButton.snp.makeConstraints{ (make) in
+            make.centerY.equalTo(self)
+            make.height.equalTo(self.snp.height).multipliedBy(0.45)
+            make.width.equalTo(self.homepageButton.snp.height).multipliedBy(1.12)
+            make.right.equalTo(self.favoriteStarButton.snp.left).multipliedBy(0.95)
+        }
+        homepageButton.addTarget(self, action: #selector(touchUpHomePage(_:)), for: .touchUpInside)
     }
     
     /// favoriteState에 따라 별 색깔을 다르게하는 메소드
@@ -75,6 +85,13 @@ class TableViewCell: UITableViewCell {
     func setUserDefaults(contacts: [[String:Any]], value: [String:Any]) {
         favoriteContacts = contacts as? [[String:String]] ?? []
         favoriteContact = value as? [String:String] ?? [:]
+        DispatchQueue.main.async {
+            if self.favoriteContact["address"] != nil {
+                self.homepageButton.setImage(UIImage(named: "homepage_enable"), for: .normal)
+            } else {
+                self.homepageButton.setImage(UIImage(named: "homepage_disable"), for: .normal)
+            }
+        }
     }
     
     @objc
@@ -94,6 +111,14 @@ class TableViewCell: UITableViewCell {
                 }
                 UserDefaults.standard.set(favoriteContacts, forKey: "userData")
             }
+        }
+    }
+    
+    @objc
+    func touchUpHomePage(_ sender: UIButton) {
+        if homepageButton.currentImage == UIImage(named: "homepage_enable") {
+            guard let url = URL(string: favoriteContact["address"] ?? "") else { return }
+            UIApplication.shared.open(url)
         }
     }
 }

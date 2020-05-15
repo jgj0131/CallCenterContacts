@@ -43,6 +43,30 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         setConstraints()
     }
     
+    func handleActivity(_ userActivity: NSUserActivity) {
+        guard let audioCallIntent = userActivity.interaction?.intent as? INStartCallIntent else {
+            return
+        }
+        if let contact = audioCallIntent.contacts?.first {
+            
+            if let type = contact.personHandle?.type, type == .phoneNumber {
+                guard let callNumber = contact.personHandle?.value else {
+                    return
+                }
+
+                let callUrl = URL(string: "tel://\(callNumber)")
+                if UIApplication.shared.canOpenURL(callUrl!) {
+                    UIApplication.shared.open(callUrl!, options: [:], completionHandler: nil)
+                } else {
+                    let alertController = UIAlertController(title: nil , message: Texts.callingNotSupport.rawValue, preferredStyle: .alert)
+                    let okAlertAction = UIAlertAction(title: Texts.confirm.rawValue , style: UIAlertAction.Style.default, handler:nil)
+                    alertController.addAction(okAlertAction)
+                    self.present(alertController, animated: true, completion: nil)
+                }
+            }
+        }
+    }
+    
     // MARK: Custom Method
     func setConstraints() {
         self.view.addSubview(tableView)
