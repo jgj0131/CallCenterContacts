@@ -292,7 +292,16 @@ extension UserDefaultViewController: UITableViewDelegate, UITableViewDataSource 
         if isFiltering() {
             return ""
         } else {
-            return contactSectionTitles[section]
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                let number: Int = Int(round(UIScreen.main.bounds.width / 152))
+                var blank = ""
+                for _ in 1...number {
+                    blank += " "
+                }
+                return blank + contactSectionTitles[section]
+            } else {
+                return contactSectionTitles[section]
+            }
         }
     }
     
@@ -321,6 +330,10 @@ extension UserDefaultViewController: UITableViewDelegate, UITableViewDataSource 
             if let contactValues = totalContactsKey[contactKey] {
                 cell.textLabel?.text = contactValues[indexPath.row]["name"]
             }
+        }
+        cell.textLabel?.snp.makeConstraints{ (make) in
+            make.centerY.equalTo(cell)
+            make.left.equalTo(cell).offset(UIScreen.main.bounds.width / 22)
         }
         return cell
     }

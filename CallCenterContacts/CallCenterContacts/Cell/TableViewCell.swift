@@ -59,7 +59,11 @@ class TableViewCell: UITableViewCell {
         favoriteStarButton.snp.makeConstraints{ (make) in
             make.centerY.equalTo(self)
             make.width.height.equalTo(self.snp.height).multipliedBy(0.45)
-            make.right.equalTo(self).multipliedBy(0.9)
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                make.right.equalTo(self).multipliedBy(0.945)
+            } else {
+                make.right.equalTo(self).multipliedBy(0.9)
+            }
         }
         favoriteStarButton.addTarget(self, action:#selector(touchUpFavorite(_:)), for: .touchUpInside)
         
@@ -70,6 +74,14 @@ class TableViewCell: UITableViewCell {
             make.right.equalTo(self.favoriteStarButton.snp.left).multipliedBy(0.95)
         }
         homepageButton.addTarget(self, action: #selector(touchUpHomePage(_:)), for: .touchUpInside)
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            textLabel?.textAlignment = .left
+            textLabel?.snp.makeConstraints{ (make) in
+                make.centerY.equalTo(self.contentView)
+                make.left.equalTo(self).offset(UIScreen.main.bounds.width / 22)
+            }
+        }
     }
     
     /// favoriteState에 따라 별 색깔을 다르게하는 메소드

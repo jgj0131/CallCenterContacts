@@ -14,6 +14,7 @@ import FirebaseFirestore
 class DetailViewController: UIViewController {
 
     // MARK: UI Property
+    lazy var collectionView = UICollectionView()
     lazy var tableView = UITableView()
     lazy var titleLabel: UILabel = {
         let title = UILabel()
@@ -39,15 +40,29 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .systemBackground
         
+        let collectionLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        collectionLayout.scrollDirection = .horizontal
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            collectionLayout.itemSize = CGSize(width: self.view.bounds.height/24.8, height: self.view.bounds.height/24.8)
+        } else {
+            collectionLayout.itemSize = CGSize(width: self.view.bounds.height/25, height: self.view.bounds.height/25)
+        }
+        collectionLayout.minimumLineSpacing = self.view.bounds.height/25
+        collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: collectionLayout)
+        self.collectionView.delegate = self
+        self.collectionView.dataSource = self
+        self.collectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: CollectionViewCell.identifier)
+        
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.register(TableViewCell.self, forCellReuseIdentifier: TableViewCell.identifier)
+        
         self.searchController.searchResultsUpdater = self
         self.searchController.obscuresBackgroundDuringPresentation = false
         self.searchController.hidesNavigationBarDuringPresentation = false
         self.searchController.searchBar.placeholder = Texts.name.rawValue
         
-        setFirestoreData()
+        setFirestoreData(listIndex: listIndex)
         setConstraints()
         setNavigationBarItems()
     }
@@ -58,12 +73,34 @@ class DetailViewController: UIViewController {
     
     // MARK: Custom Method
     func setConstraints() {
+        self.view.addSubview(collectionView)
         self.view.addSubview(tableView)
+        
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.backgroundColor = .systemBackground
+        collectionView.snp.makeConstraints{ (make) in
+            make.top.equalTo(self.view.safeAreaLayoutGuide)
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                make.width.equalTo(self.view).multipliedBy(0.92)
+                make.height.equalTo(self.view.safeAreaLayoutGuide).multipliedBy(0.07)
+            } else {
+                make.width.equalTo(self.view)
+                make.height.equalTo(self.view.safeAreaLayoutGuide).multipliedBy(0.1)
+            }
+            make.centerX.equalTo(self.view)
+        }
         
         tableView.tableFooterView = UIView(frame: .zero)
         tableView.snp.makeConstraints{ (make) in
-            make.width.height.equalTo(self.view.safeAreaLayoutGuide)
-            make.center.equalTo(self.view.safeAreaLayoutGuide)
+            make.width.equalTo(self.view)
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                make.height.equalTo(self.view.safeAreaLayoutGuide).multipliedBy(0.93)
+            } else {
+                make.height.equalTo(self.view.safeAreaLayoutGuide).multipliedBy(0.9)
+            }
+            make.top.equalTo(self.collectionView.snp.bottom)
+            make.centerX.equalTo(self.view.safeAreaLayoutGuide)
         }
     }
     
@@ -112,9 +149,12 @@ class DetailViewController: UIViewController {
     }
     
     // MARK: Firstore - read Data
-    private func setFirestoreData() {
+    private func setFirestoreData(listIndex: Int) {
         let db = Firestore.firestore()
         db.collection(firestoreCollectionList[listIndex]).getDocuments() { (querySnapshot, err) in
+            self.contactsData = []
+            self.contactSectionTitles = []
+            self.totalContactsKey = [:]
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
@@ -191,6 +231,49 @@ class DetailViewController: UIViewController {
 }
 
 // MARK: Extension
+extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return firestoreCollectionList.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCell.identifier, for: indexPath) as? CollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        
+        cell.iconButton.setImage(UIImage(named: firestoreCollectionList[indexPath.row] + "_disable"), for: .normal)
+        cell.iconButton.setImage(UIImage(named: firestoreCollectionList[indexPath.row] + "_enable"), for: .selected)
+        cell.iconButton.imageView?.contentMode = .scaleAspectFit
+        if indexPath.row == listIndex {
+            cell.iconButton.isSelected = true
+        } else {
+            cell.iconButton.isSelected = false
+        }
+        cell.iconButton.addTarget(self, action: #selector(touchUpIconButton(_:)), for: .touchUpInside)
+        return cell
+    }
+    
+    @objc
+    func touchUpIconButton(_ sender: UIButton) {
+        if sender.isSelected == false {
+            for index in 0..<firestoreCollectionList.count {
+                guard let cell = collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? CollectionViewCell else {
+                    return
+                }
+                if cell.iconButton == sender {
+                    setFirestoreData(listIndex: index)
+                    cell.iconButton.isSelected = true
+                } else {
+                    cell.iconButton.isSelected = false
+                }
+            }
+        } else {
+            
+        }
+    }
+
+}
+
 extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         if isFiltering(){
@@ -204,7 +287,16 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
         if isFiltering() {
             return ""
         } else {
-            return contactSectionTitles[section]
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                let number: Int = Int(round(UIScreen.main.bounds.width / 152))
+                var blank = ""
+                for _ in 1...number {
+                    blank += " "
+                }
+                return blank + contactSectionTitles[section]
+            } else {
+                return contactSectionTitles[section]
+            }
         }
     }
     
