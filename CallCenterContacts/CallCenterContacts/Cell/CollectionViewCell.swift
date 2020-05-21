@@ -14,7 +14,10 @@ class CollectionViewCell: UICollectionViewCell {
     static var identifier: String = "CollectionViewCell"
 
     // MARK: UI Property
-    lazy var iconButton = UIButton()
+    lazy var iconImage = UIImageView()
+    
+    // MARK: Property
+    var imageName = "emergency_disable"
  
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -23,12 +26,10 @@ class CollectionViewCell: UICollectionViewCell {
     
     // MARK: Custom Method
     func setConstraint() {
-        self.contentView.addSubview(iconButton)
+        self.contentView.addSubview(iconImage)
         
-        iconButton.setImage(UIImage(named: "emergency_disable"), for: .normal)
-//        imageView.layer.borderWidth = 0
-//        imageView.layer.borderColor = UIColor.label.cgColor
-        iconButton.snp.makeConstraints{ (make) in
+        iconImage.image = UIImage(named: "emergency_disable")
+        iconImage.snp.makeConstraints{ (make) in
             make.centerY.equalTo(self.contentView)
             make.width.equalTo(self)
             make.height.equalTo(self)
@@ -42,7 +43,6 @@ class CollectionViewCell: UICollectionViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        iconButton.setImage(nil, for: .normal)
-        iconButton.setImage(nil, for: .selected)
+        iconImage.image = UIImage(named: imageName)
     }
 }

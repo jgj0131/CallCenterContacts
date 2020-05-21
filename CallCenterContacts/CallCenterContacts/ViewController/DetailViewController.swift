@@ -79,6 +79,7 @@ class DetailViewController: UIViewController {
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .systemBackground
+        collectionView.allowsSelection = true
         collectionView.snp.makeConstraints{ (make) in
             make.top.equalTo(self.view.safeAreaLayoutGuide)
             if UIDevice.current.userInterfaceIdiom == .pad {
@@ -240,38 +241,35 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCell.identifier, for: indexPath) as? CollectionViewCell else {
             return UICollectionViewCell()
         }
-        
-        cell.iconButton.setImage(UIImage(named: firestoreCollectionList[indexPath.row] + "_disable"), for: .normal)
-        cell.iconButton.setImage(UIImage(named: firestoreCollectionList[indexPath.row] + "_enable"), for: .selected)
-        cell.iconButton.imageView?.contentMode = .scaleAspectFit
+        cell.iconImage.image = UIImage(named: firestoreCollectionList[indexPath.row] + "_disable")
+        cell.imageName = firestoreCollectionList[indexPath.row] + "_disable"
+        cell.iconImage.contentMode = .scaleAspectFit
         if indexPath.row == listIndex {
-            cell.iconButton.isSelected = true
+            collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .init())
+            cell.iconImage.image = UIImage(named: firestoreCollectionList[indexPath.row] + "_enable")
         } else {
-            cell.iconButton.isSelected = false
+            cell.iconImage.image = UIImage(named: firestoreCollectionList[indexPath.row] + "_disable")
         }
-        cell.iconButton.addTarget(self, action: #selector(touchUpIconButton(_:)), for: .touchUpInside)
         return cell
     }
     
-    @objc
-    func touchUpIconButton(_ sender: UIButton) {
-        if sender.isSelected == false {
-            for index in 0..<firestoreCollectionList.count {
-                guard let cell = collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? CollectionViewCell else {
-                    return
-                }
-                if cell.iconButton == sender {
-                    setFirestoreData(listIndex: index)
-                    cell.iconButton.isSelected = true
-                } else {
-                    cell.iconButton.isSelected = false
-                }
-            }
-        } else {
-            
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        setFirestoreData(listIndex: indexPath.row)
+        guard let cell = collectionView.cellForItem(at: indexPath) as? CollectionViewCell else {
+            return
         }
+        listIndex = indexPath.row
+        cell.iconImage.image = UIImage(named: firestoreCollectionList[indexPath.row] + "_enable")
+        collectionView.reloadData()
     }
-
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? CollectionViewCell else {
+            return
+        }
+        cell.iconImage.image = UIImage(named: firestoreCollectionList[indexPath.row] + "_disable")
+    }
 }
 
 extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
