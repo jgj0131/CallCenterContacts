@@ -319,7 +319,15 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
         let contactToDisplay:[String:Any]
         if isFiltering(){
             contactToDisplay = filteredContacts[indexPath.row]
+            let contactToStringDisplay = contactToDisplay as? [String:String] ?? [:]
             cell.textLabel?.text = contactToDisplay["name"] as? String ?? ""
+            if userContactsData.contains(contactToStringDisplay) {
+                cell.favoriteState = true
+            } else {
+                cell.favoriteState = false
+            }
+            cell.changeStar(value: cell.favoriteState)
+            cell.setUserDefaults(contacts: userContactsData, value: contactToStringDisplay)
         } else {
             let contactKey = contactSectionTitles[indexPath.section]
             if let contactValues = totalContactsKey[contactKey] {
