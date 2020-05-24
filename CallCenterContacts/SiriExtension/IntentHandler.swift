@@ -34,7 +34,7 @@ extension IntentHandler: INStartCallIntentHandling {
     func resolveContacts(for intent: INStartCallIntent, with completion: @escaping ([INStartCallContactResolutionResult]) -> Void) {
         var contactName: String?
         if let contacts = intent.contacts {
-            contactName = contacts.first?.displayName
+            contactName = contacts.first?.displayName.replacingOccurrences(of: " ", with: "")
         }
         
         SiriDataManager.sharedManager.findContact(contactName: contactName, with: { (contacts) in
