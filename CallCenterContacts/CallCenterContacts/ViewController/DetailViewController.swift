@@ -65,10 +65,17 @@ class DetailViewController: UIViewController {
         setFirestoreData(listIndex: listIndex)
         setConstraints()
         setNavigationBarItems()
+        setGesture()
     }
             
     override func viewWillDisappear(_ animated: Bool) {
         titleLabel.removeFromSuperview()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        DispatchQueue.main.async {
+            self.collectionView.scrollToItem(at: IndexPath(row: self.listIndex, section: 0), at: .centeredHorizontally, animated: true)
+        }
     }
     
     // MARK: Custom Method
@@ -103,6 +110,51 @@ class DetailViewController: UIViewController {
             make.top.equalTo(self.collectionView.snp.bottom)
             make.centerX.equalTo(self.view.safeAreaLayoutGuide)
         }
+    }
+    
+    func setGesture() {
+        let leftSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeLeft(recognizer:)))
+        let rightSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeRight(recognizer:)))
+        leftSwipeGestureRecognizer.direction = .left
+        rightSwipeGestureRecognizer.direction = .right
+        
+        tableView.addGestureRecognizer(leftSwipeGestureRecognizer)
+        tableView.addGestureRecognizer(rightSwipeGestureRecognizer)
+    }
+    
+    @objc
+    func handleSwipeLeft(recognizer: UISwipeGestureRecognizer) {
+        if listIndex == firestoreCollectionList.count - 1 {
+            listIndex = 0
+            collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .left, animated: true)
+        } else {
+            listIndex += 1
+        }
+        setFirestoreData(listIndex: listIndex)
+        guard let cell = collectionView.cellForItem(at: IndexPath(row: listIndex, section: 0)) as? CollectionViewCell else {
+            return
+        }
+        cell.iconImage.image = UIImage(named: firestoreCollectionList[listIndex] + "_enable")
+        collectionView.reloadData()
+        collectionView.scrollToItem(at: IndexPath(row: listIndex, section: 0), at: .centeredHorizontally, animated: true)
+        
+    }
+    
+    @objc
+    func handleSwipeRight(recognizer: UISwipeGestureRecognizer) {
+        if listIndex == 0 {
+            listIndex = firestoreCollectionList.count - 1
+            collectionView.scrollToItem(at: IndexPath(row: firestoreCollectionList.count - 1, section: 0), at: .right, animated: true)
+        } else {
+            listIndex -= 1
+        }
+        setFirestoreData(listIndex: listIndex)
+        guard let cell = collectionView.cellForItem(at: IndexPath(row: listIndex, section: 0)) as? CollectionViewCell else {
+            return
+        }
+        cell.iconImage.image = UIImage(named: firestoreCollectionList[listIndex] + "_enable")
+        collectionView.reloadData()
+        collectionView.scrollToItem(at: IndexPath(row: listIndex, section: 0), at: .centeredHorizontally, animated: true)
     }
     
     private func setNavigationBarItems() {
@@ -262,6 +314,7 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
         listIndex = indexPath.row
         cell.iconImage.image = UIImage(named: firestoreCollectionList[indexPath.row] + "_enable")
         collectionView.reloadData()
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
