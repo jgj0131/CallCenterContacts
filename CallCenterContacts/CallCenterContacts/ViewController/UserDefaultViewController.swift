@@ -31,6 +31,8 @@ class UserDefaultViewController: UIViewController {
     private var contactSectionTitles = [String]()
     private var totalContactsKey = [String:[[String:String]]]()
     let prefixs: [String:[UInt32]] = ["ㄱ": [4352, 12593], "ㄲ": [4353, 12594], "ㄴ": [4354, 12596], "ㄷ": [4355, 12599], "ㄸ": [4356, 12600], "ㄹ": [4357, 12601], "ㅁ":[4358, 12609], "ㅂ": [4359, 12610], "ㅃ": [4360, 12611], "ㅅ": [4361, 12613], "ㅆ": [4362, 12614], "ㅇ": [4363, 12615], "ㅈ": [4364, 12616], "ㅉ": [4365, 12617], "ㅊ": [4366, 12618], "ㅋ": [4367, 12619], "ㅌ": [4368, 12620], "ㅍ": [4368, 12621], "ㅎ": [4370, 12622]]
+    let userDefaults  = UserDefaults(suiteName: SiriDataManager.sharedSuiteName)
+    private var savedContacts: [[String:String]] = []
 
     enum overlapState {
         case notOverlap
@@ -218,12 +220,10 @@ class UserDefaultViewController: UIViewController {
         let ok = UIAlertAction(title: Texts.confirm.rawValue, style: .default) { (ok) in
             var overlapState: overlapState = .notOverlap
             var value = ["name": "", "number": ""]
-            let userDefaults  = UserDefaults(suiteName: SiriDataManager.sharedSuiteName)
-            let savedContacts = userDefaults?.object(forKey: SiriDataManager.sharedSuiteName) as? [[String: String]] ?? []
-            
+            self.savedContacts = self.userDefaults?.object(forKey: SiriDataManager.sharedSuiteName) as? [[String: String]] ?? []
             value["name"] = alert.textFields?[0].text
             value["number"] = self.matches(in: alert.textFields?[1].text ?? "")
-            for data in savedContacts {
+            for data in self.savedContacts {
                 if data["name"]?.lowercased() == value["name"]?.lowercased() {
                     overlapState = .anotheListOverlap
                 }
@@ -245,6 +245,7 @@ class UserDefaultViewController: UIViewController {
                     self.tableView.insertRows(at: [IndexPath(row: 0, section: sectionNumber)], with: .automatic)
                     self.tableView.endUpdates()
                     UserDefaults.standard.set(self.contactsData, forKey: "userData")
+                    SiriDataManager.sharedManager.saveContacts(contacts: self.savedContacts)
                 } else {
                     self.setTotalContactsKey()
                     let keysValue = self.totalContactsKey[self.prefixKorean(name: value["name"] ?? "")]
@@ -252,6 +253,7 @@ class UserDefaultViewController: UIViewController {
                     self.tableView.insertRows(at: [IndexPath(row: keysValue!.count - 1, section: self.contactSectionTitles.firstIndex(of: self.prefixKorean(name: value["name"] ?? "")) ?? 0)], with: .automatic)
                     self.tableView.endUpdates()
                     UserDefaults.standard.set(self.contactsData, forKey: "userData")
+                    SiriDataManager.sharedManager.saveContacts(contacts: self.savedContacts)
                 }
             } else if overlapState == .anotheListOverlap {
                 let overlapAlert = UIAlertController(title: Texts.anotherListOverlapTitle.rawValue, message: Texts.anotherListOverlapMessage.rawValue, preferredStyle: .alert)
@@ -373,6 +375,7 @@ extension UserDefaultViewController: UITableViewDelegate, UITableViewDataSource 
             }
             tableView.endUpdates()
             UserDefaults.standard.set(self.contactsData, forKey: "userData")
+            SiriDataManager.sharedManager.saveContacts(contacts: self.savedContacts)
         }
     }
 }
