@@ -23,6 +23,7 @@
 		159185662428FD8C00D75673 /* SiriExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 1591854E2428FD8B00D75673 /* SiriExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		1591856F24290B1900D75673 /* SiriDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1591856E24290B1900D75673 /* SiriDataManager.swift */; };
 		159185732429197900D75673 /* SiriDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1591856E24290B1900D75673 /* SiriDataManager.swift */; };
+		15A93BC2247EB6EC005852BE /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A93BC1247EB6EC005852BE /* Keys.swift */; };
 		15F6911E245073FE00D26CFE /* Texts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F6911D245073FE00D26CFE /* Texts.swift */; };
 		15F69122246FD74400D26CFE /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F69121246FD74400D26CFE /* CollectionViewCell.swift */; };
 		2118177AD79E4BAA1C7128F5 /* Pods_CallCenterContacts_CallCenterContactsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA5853D05D59E07DB2A7DF5A /* Pods_CallCenterContacts_CallCenterContactsUITests.framework */; };
@@ -94,6 +95,7 @@
 		159185522428FD8B00D75673 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		159185582428FD8C00D75673 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
 		1591856E24290B1900D75673 /* SiriDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiriDataManager.swift; sourceTree = "<group>"; };
+		15A93BC1247EB6EC005852BE /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		15F6911D245073FE00D26CFE /* Texts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Texts.swift; sourceTree = "<group>"; };
 		15F69121246FD74400D26CFE /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		16F31B9C8E7CA2C0423EF44B /* Pods-CallCenterContacts.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CallCenterContacts.release.xcconfig"; path = "Target Support Files/Pods-CallCenterContacts/Pods-CallCenterContacts.release.xcconfig"; sourceTree = "<group>"; };
@@ -244,6 +246,7 @@
 			isa = PBXGroup;
 			children = (
 				15F6911D245073FE00D26CFE /* Texts.swift */,
+				15A93BC1247EB6EC005852BE /* Keys.swift */,
 			);
 			path = Texts;
 			sourceTree = "<group>";
@@ -551,6 +554,7 @@
 				1510EFF9243CB7AF00E6ECE6 /* TableViewCell.swift in Sources */,
 				15F6911E245073FE00D26CFE /* Texts.swift in Sources */,
 				159185452421228E00D75673 /* UserDefaultViewController.swift in Sources */,
+				15A93BC2247EB6EC005852BE /* Keys.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

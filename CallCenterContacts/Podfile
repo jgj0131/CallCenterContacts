@@ -10,7 +10,7 @@ target 'CallCenterContacts' do
 	pod 'Firebase/Core'
 	pod 'Firebase/Firestore'
 	pod 'FirebaseFirestoreSwift'
-
+	pod 'Google-Mobile-Ads-SDK'
   target 'CallCenterContactsTests' do
     inherit! :search_paths
     # Pods for testing

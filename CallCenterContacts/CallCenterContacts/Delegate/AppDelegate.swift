@@ -9,6 +9,7 @@ import Intents
 import UIKit
 import Firebase
 import FirebaseFirestore
+import GoogleMobileAds
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         let db = Firestore.firestore()
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
         sleep(2)
         return true
     }
