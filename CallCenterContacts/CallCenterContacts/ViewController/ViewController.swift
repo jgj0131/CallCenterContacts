@@ -17,7 +17,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
 
     // MARK: UI Property
     lazy var tableView = UITableView()
-    var bannerView: GADBannerView!
+    private var bannerView: GADBannerView!
     
     // MARK: Property
     let contactsList = ["긴급", "금융", "문화", "민원", "부동산", "쇼핑", "안보", "여행", "의료", "추가등록"]
@@ -43,11 +43,13 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         self.searchController.hidesNavigationBarDuringPresentation = true
         self.searchController.searchBar.placeholder = Texts.name.rawValue
         
+        
+        
         bannerView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
-        addBannerViewToView(bannerView)
-        bannerView.adUnitID = Keys.adUnitID.rawValue
+        bannerView.adUnitID = Keys.bannerTestID.rawValue//Keys.bannerAdID.rawValue
         bannerView.rootViewController = self
         bannerView.load(GADRequest())
+        
         bannerView.delegate = self
         
         INPreferences.requestSiriAuthorization { (status) in
@@ -88,55 +90,6 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         navigationItem.hidesSearchBarWhenScrolling = false
         definesPresentationContext = true
     }
-
-    func addBannerViewToView(_ bannerView: GADBannerView) {
-        bannerView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(bannerView)
-        if #available(iOS 11.0, *) {
-            // In iOS 11, we need to constrain the view to the safe area.
-            positionBannerViewFullWidthAtBottomOfSafeArea(bannerView)
-        } else {
-            // In lower iOS versions, safe area is not available so we use
-            // bottom layout guide and view edges.
-            positionBannerViewFullWidthAtBottomOfView(bannerView)
-        }
-    }
-      
-    @available (iOS 11, *)
-    func positionBannerViewFullWidthAtBottomOfSafeArea(_ bannerView: UIView) {
-        // Position the banner. Stick it to the bottom of the Safe Area.
-        // Make it constrained to the edges of the safe area.
-        let guide = view.safeAreaLayoutGuide
-        NSLayoutConstraint.activate([
-            guide.leftAnchor.constraint(equalTo: bannerView.leftAnchor),
-            guide.rightAnchor.constraint(equalTo: bannerView.rightAnchor),
-            guide.bottomAnchor.constraint(equalTo: bannerView.bottomAnchor)])
-    }
-    
-    func positionBannerViewFullWidthAtBottomOfView(_ bannerView: UIView) {
-        view.addConstraint(NSLayoutConstraint(item: bannerView,
-                                              attribute: .leading,
-                                              relatedBy: .equal,
-                                              toItem: view,
-                                              attribute: .leading,
-                                              multiplier: 1,
-                                              constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: bannerView,
-                                              attribute: .trailing,
-                                              relatedBy: .equal,
-                                              toItem: view,
-                                              attribute: .trailing,
-                                              multiplier: 1,
-                                              constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: bannerView,
-                                              attribute: .bottom,
-                                              relatedBy: .equal,
-                                              toItem: bottomLayoutGuide.topAnchor,
-                                              attribute: .top,
-                                              multiplier: 1,
-                                              constant: 0))
-     }
-     
     
     func setFireStoreData() {
         let db = Firestore.firestore()
@@ -282,11 +235,61 @@ extension ViewController: UISearchResultsUpdating {
 }
 
 extension ViewController: GADBannerViewDelegate {
+    func addBannerViewToView(_ bannerView: GADBannerView) {
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(bannerView)
+        if #available(iOS 11.0, *) {
+            // In iOS 11, we need to constrain the view to the safe area.
+            positionBannerViewFullWidthAtBottomOfSafeArea(bannerView)
+        } else {
+            // In lower iOS versions, safe area is not available so we use
+            // bottom layout guide and view edges.
+            positionBannerViewFullWidthAtBottomOfView(bannerView)
+        }
+    }
+      
+    @available (iOS 11, *)
+    func positionBannerViewFullWidthAtBottomOfSafeArea(_ bannerView: UIView) {
+        // Position the banner. Stick it to the bottom of the Safe Area.
+        // Make it constrained to the edges of the safe area.
+        let guide = view.safeAreaLayoutGuide
+        NSLayoutConstraint.activate([
+            guide.leftAnchor.constraint(equalTo: bannerView.leftAnchor),
+            guide.rightAnchor.constraint(equalTo: bannerView.rightAnchor),
+            guide.bottomAnchor.constraint(equalTo: bannerView.bottomAnchor)])
+    }
+    
+    func positionBannerViewFullWidthAtBottomOfView(_ bannerView: UIView) {
+        view.addConstraint(NSLayoutConstraint(item: bannerView,
+                                              attribute: .leading,
+                                              relatedBy: .equal,
+                                              toItem: view,
+                                              attribute: .leading,
+                                              multiplier: 1,
+                                              constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: bannerView,
+                                              attribute: .trailing,
+                                              relatedBy: .equal,
+                                              toItem: view,
+                                              attribute: .trailing,
+                                              multiplier: 1,
+                                              constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: bannerView,
+                                              attribute: .bottom,
+                                              relatedBy: .equal,
+                                              toItem: view.safeAreaLayoutGuide.topAnchor,
+                                              attribute: .top,
+                                              multiplier: 1,
+                                              constant: 0))
+     }
+
+    
     func adViewDidReceiveAd(_ bannerView: GADBannerView) {
         bannerView.alpha = 0
         UIView.animate(withDuration: 1, animations: {
           bannerView.alpha = 1
         })
+        addBannerViewToView(bannerView)
         print("adViewDidReceiveAd")
     }
 

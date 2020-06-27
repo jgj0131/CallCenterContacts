@@ -13,7 +13,7 @@ import FirebaseFirestore
 import GoogleMobileAds
 
 class DetailViewController: UIViewController {
-
+    
     // MARK: UI Property
     lazy var collectionView = UICollectionView()
     lazy var tableView = UITableView()
@@ -25,9 +25,13 @@ class DetailViewController: UIViewController {
         title.translatesAutoresizingMaskIntoConstraints = false
         return title
     }()
+    var bannerView: GADBannerView!
     
     // MARK: Property
-    var adLoader: GADAdLoader!
+    var adLoader: GADAdLoader?
+    var nativeAds = [GADUnifiedNativeAd]()
+    var nativeAdView: GADUnifiedNativeAdView!
+    let adUnitID =  Keys.nativeTestID.rawValue//Keys.nativeAdID.rawValue
     let firestoreCollectionList = ["emergency", "finance", "culture", "civil complaint", "real property", "shopping", "security", "travel", "medical"]
     var listIndex = 0
     private var  contactsData: [[String:Any]] = []
@@ -52,14 +56,21 @@ class DetailViewController: UIViewController {
         collectionLayout.minimumLineSpacing = self.view.bounds.height/25
         collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: collectionLayout)
         
-        let multipleAdsOptions = GADMultipleAdsAdLoaderOptions()
-        multipleAdsOptions.numberOfAds = 5
-
-        adLoader = GADAdLoader(adUnitID: Keys.adUnitID.rawValue, rootViewController: self,
-            adTypes: [GADAdLoaderAdType.unifiedNative],
-            options: [multipleAdsOptions])
-        adLoader.delegate = self
-        adLoader.load(GADRequest())
+        bannerView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
+        bannerView.adUnitID = Keys.bannerTestID.rawValue//Keys.detailViewBannerAdID.rawValue
+        bannerView.rootViewController = self
+        bannerView.load(GADRequest())
+        
+        bannerView.delegate = self
+//        let multipleAdsOptions = GADMultipleAdsAdLoaderOptions()
+//        multipleAdsOptions.numberOfAds = 5
+//
+//        adLoader = GADAdLoader(adUnitID: adUnitID, rootViewController: self,
+//            adTypes: [GADAdLoaderAdType.unifiedNative],
+//            options: [multipleAdsOptions])
+//        adLoader?.delegate = self
+//        adLoader!.load(GADRequest())
+//
         
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
@@ -68,6 +79,8 @@ class DetailViewController: UIViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.register(TableViewCell.self, forCellReuseIdentifier: TableViewCell.identifier)
+//        self.tableView.register(GoogleNativeAdTableViewCell.self, forCellReuseIdentifier: GoogleNativeAdTableViewCell.identifier)
+//        self.tableView.register(UnifiedNativeAdCell.self, forCellReuseIdentifier: UnifiedNativeAdCell.identifier)
         
         self.searchController.searchResultsUpdater = self
         self.searchController.obscuresBackgroundDuringPresentation = false
@@ -89,6 +102,54 @@ class DetailViewController: UIViewController {
             self.collectionView.scrollToItem(at: IndexPath(row: self.listIndex, section: 0), at: .centeredHorizontally, animated: true)
         }
     }
+    
+//    func setAdView(_ view: GADUnifiedNativeAdView) {
+        // Remove the previous ad view.
+//        nativeAdView = view
+//        let cell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0))
+//        self.view.addSubview(nativeAdView)
+//        cell?.addSubview(nativeAdView)
+//        nativeAdPlaceholder.addSubview(nativeAdView)
+//        nativeAdView.translatesAutoresizingMaskIntoConstraints = false
+        // Layout constraints for positioning the native ad view to stretch the entire width and height
+        // of the nativeAdPlaceholder.
+//        let viewDictionary = ["_nativeAdView": nativeAdView/*!*/]
+//        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[_nativeAdView]|",
+//                                                                  options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: viewDictionary))
+//        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[_nativeAdView]|",
+//                                                                  options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: viewDictionary))
+//    }
+
+    // MARK: - Actions
+
+    /// Refreshes the native ad.
+//    @IBAction func refreshAd(_ sender: AnyObject!) {
+////      refreshAdButton.isEnabled = false
+////      videoStatusLabel.text = ""
+//      adLoader = GADAdLoader(adUnitID: adUnitID, rootViewController: self,
+//                             adTypes: [ .unifiedNative ], options: nil)
+//      adLoader.delegate = self
+//      adLoader.load(GADRequest())
+//    }
+//
+//    /// Returns a `UIImage` representing the number of stars from the given star rating; returns `nil`
+//    /// if the star rating is less than 3.5 stars.
+//    func imageOfStars(from starRating: NSDecimalNumber?) -> UIImage? {
+//      guard let rating = starRating?.doubleValue else {
+//        return nil
+//      }
+//      if rating >= 5 {
+//        return UIImage(named: "stars_5")
+//      } else if rating >= 4.5 {
+//        return UIImage(named: "stars_4_5")
+//      } else if rating >= 4 {
+//        return UIImage(named: "stars_4")
+//      } else if rating >= 3.5 {
+//        return UIImage(named: "stars_3_5")
+//      } else {
+//        return nil
+//      }
+//    }
     
     // MARK: Custom Method
     func setConstraints() {
@@ -295,7 +356,7 @@ class DetailViewController: UIViewController {
     }
 }
 
-// MARK: Extension
+// MARK: Extension - CollectionView
 extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return firestoreCollectionList.count
@@ -337,6 +398,7 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
 }
 
+// MARK: Extension - TableView
 extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         if isFiltering(){
@@ -376,6 +438,13 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        if indexPath.row == self.tableView.numberOfRows(inSection: indexPath.section) - 1 {
+//            guard let cell = tableView.dequeueReusableCell(withIdentifier: GoogleNativeAdTableViewCell.identifier) as? GoogleNativeAdTableViewCell else{
+//                return UITableViewCell()
+//            }
+//            return cell
+//        }
+        
         userContactsData = UserDefaults.standard.object(forKey: "userData") as? [[String : String]] ?? []
         guard let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.identifier) as? TableViewCell else{
             return UITableViewCell()
@@ -433,89 +502,205 @@ extension DetailViewController: UISearchResultsUpdating {
     }
 }
 
-extension DetailViewController: GADUnifiedNativeAdLoaderDelegate {
-    func adLoader(_ adLoader: GADAdLoader, didFailToReceiveAdWithError error: GADRequestError) {
-        print(error)
+// MARK: Extension - BannerAd
+extension DetailViewController: GADBannerViewDelegate {
+    func addBannerViewToView(_ bannerView: GADBannerView) {
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(bannerView)
+        if #available(iOS 11.0, *) {
+            // In iOS 11, we need to constrain the view to the safe area.
+            positionBannerViewFullWidthAtBottomOfSafeArea(bannerView)
+        } else {
+            // In lower iOS versions, safe area is not available so we use
+            // bottom layout guide and view edges.
+            positionBannerViewFullWidthAtBottomOfView(bannerView)
+        }
+    }
+      
+    @available (iOS 11, *)
+    func positionBannerViewFullWidthAtBottomOfSafeArea(_ bannerView: UIView) {
+        // Position the banner. Stick it to the bottom of the Safe Area.
+        // Make it constrained to the edges of the safe area.
+        let guide = view.safeAreaLayoutGuide
+        NSLayoutConstraint.activate([
+            guide.leftAnchor.constraint(equalTo: bannerView.leftAnchor),
+            guide.rightAnchor.constraint(equalTo: bannerView.rightAnchor),
+            guide.bottomAnchor.constraint(equalTo: bannerView.bottomAnchor)])
     }
     
-    // MARK: Google Mobile Ads
-    func adLoader(_ adLoader: GADAdLoader, didReceive nativeAd: GADUnifiedNativeAd) {
-      print("Received unified native ad: \(nativeAd)")
+    func positionBannerViewFullWidthAtBottomOfView(_ bannerView: UIView) {
+        view.addConstraint(NSLayoutConstraint(item: bannerView,
+                                              attribute: .leading,
+                                              relatedBy: .equal,
+                                              toItem: view,
+                                              attribute: .leading,
+                                              multiplier: 1,
+                                              constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: bannerView,
+                                              attribute: .trailing,
+                                              relatedBy: .equal,
+                                              toItem: view,
+                                              attribute: .trailing,
+                                              multiplier: 1,
+                                              constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: bannerView,
+                                              attribute: .bottom,
+                                              relatedBy: .equal,
+                                              toItem: view.safeAreaLayoutGuide.topAnchor,
+                                              attribute: .top,
+                                              multiplier: 1,
+                                              constant: 0))
+     }
+
+    
+    func adViewDidReceiveAd(_ bannerView: GADBannerView) {
+        bannerView.alpha = 0
+        UIView.animate(withDuration: 1, animations: {
+          bannerView.alpha = 1
+        })
+        addBannerViewToView(bannerView)
+        print("adViewDidReceiveAd")
+    }
+
+    /// Tells the delegate an ad request failed.
+    func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequestError) {
+        print("adView:didFailToReceiveAdWithError: \(error.localizedDescription)")
+    }
+
+    /// Tells the delegate that a full-screen view will be presented in response
+    /// to the user clicking on an ad.
+    func adViewWillPresentScreen(_ bannerView: GADBannerView) {
+        print("adViewWillPresentScreen")
+    }
+
+    /// Tells the delegate that the full-screen view will be dismissed.
+    func adViewWillDismissScreen(_ bannerView: GADBannerView) {
+        print("adViewWillDismissScreen")
+    }
+
+    /// Tells the delegate that the full-screen view has been dismissed.
+    func adViewDidDismissScreen(_ bannerView: GADBannerView) {
+        print("adViewDidDismissScreen")
+    }
+
+    /// Tells the delegate that a user click will open another app (such as
+    /// the App Store), backgrounding the current app.
+    func adViewWillLeaveApplication(_ bannerView: GADBannerView) {
+        print("adViewWillLeaveApplication")
+    }
+}
+
+//extension DetailViewController: GADVideoControllerDelegate {
+//    func videoControllerDidEndVideoPlayback(_ videoController: GADVideoController) {
+//        videoStatusLabel.text = "Video playback has ended."
+//    }
+//}
+
+//extension DetailViewController: GADAdLoaderDelegate {
+//    func adLoader(_ adLoader: GADAdLoader, didFailToReceiveAdWithError error: GADRequestError) {
+//        print("\(adLoader) failed with error: \(error.localizedDescription)")
+//        refreshAdButton.isEnabled = true
+//    }
+//}
+
+//extension DetailViewController: GADUnifiedNativeAdLoaderDelegate {
+//    func adLoader(_ adLoader: GADAdLoader, didReceive nativeAd: GADUnifiedNativeAd) {
+//      print("Received unified native ad: \(nativeAd)")
+//        nativeAd.delegate = self
+//        label1.text = nativeAd.advertiser
+//        for section in 0..<contactSectionTitles.count {
+//            print(contactSectionTitles.count)
+//            let contactKey = contactSectionTitles[section]
+//            guard let contactValues = totalContactsKey[contactKey] else { return }
+//            let row = contactValues.count
+//            guard let cell = tableView.cellForRow(at: IndexPath(row: row, section: section)) as? GoogleNativeAdTableViewCell else  {
+//                return
+//            }
+//            cell.adLavel.backgroundColor = UIColor(red: 255/255, green: 212/255, blue: 121/255, alpha: 1)
+//            cell.adLavel.text = "Ad"
+//            cell.adLavel.textColor = .white
+//            cell.iconView.image = nativeAd.icon?.image
+//            cell.headlineLabel.text = nativeAd.headline
+//        }
+        
+//        nativeAds.append(nativeAd)
 //      refreshAdButton.isEnabled = true
       // Create and place ad in view hierarchy.
-      let nibView = Bundle.main.loadNibNamed("UnifiedNativeAdView", owner: nil, options: nil)?.first
-      guard let nativeAdView = nibView as? GADUnifiedNativeAdView else {
-        return
-      }
+//      let nibView = Bundle.main.loadNibNamed("UnifiedNativeAdView", owner: nil, options: nil)?.first
+//      guard let nativeAdView = nibView as? GADUnifiedNativeAdView else {
+//        return
+//      }
 //      setAdView(nativeAdView)
-        self.tableView.addSubview(nativeAdView)
 
       // Associate the native ad view with the native ad object. This is
       // required to make the ad clickable.
-      nativeAdView.nativeAd = nativeAd
+//      nativeAdView.nativeAd = nativeAd
+//
+//      // Set the mediaContent on the GADMediaView to populate it with available
+//      // video/image asset.
+//      nativeAdView.mediaView?.mediaContent = nativeAd.mediaContent
+//        nativeAd.mediaContent.videoController.delegate = self
+//      // Populate the native ad view with the native ad assets.
+//      // The headline is guaranteed to be present in every native ad.
+//      (nativeAdView.headlineView as? UILabel)?.text = nativeAd.headline
+//
+//      // These assets are not guaranteed to be present. Check that they are before
+//      // showing or hiding them.
+//      (nativeAdView.bodyView as? UILabel)?.text = nativeAd.body
+//      nativeAdView.bodyView?.isHidden = nativeAd.body == nil
+//
+//      (nativeAdView.callToActionView as? UIButton)?.setTitle(nativeAd.callToAction, for: .normal)
+//      nativeAdView.callToActionView?.isHidden = nativeAd.callToAction == nil
+//
+//      (nativeAdView.iconView as? UIImageView)?.image = nativeAd.icon?.image
+//      nativeAdView.iconView?.isHidden = nativeAd.icon == nil
+//
+//        (nativeAdView.starRatingView as? UIImageView)?.image = imageOfStars(from:nativeAd.starRating)
+//      nativeAdView.starRatingView?.isHidden = nativeAd.starRating == nil
+//
+//      (nativeAdView.storeView as? UILabel)?.text = nativeAd.store
+//      nativeAdView.storeView?.isHidden = nativeAd.store == nil
+//
+//      (nativeAdView.priceView as? UILabel)?.text = nativeAd.price
+//      nativeAdView.priceView?.isHidden = nativeAd.price == nil
+//
+//      (nativeAdView.advertiserView as? UILabel)?.text = nativeAd.advertiser
+//      nativeAdView.advertiserView?.isHidden = nativeAd.advertiser == nil
+//
+//      // In order for the SDK to process touch events properly, user interaction
+//      // should be disabled.
+//      nativeAdView.callToActionView?.isUserInteractionEnabled = false
+//    }
 
-      // Set the mediaContent on the GADMediaView to populate it with available
-      // video/image asset.
-      nativeAdView.mediaView?.mediaContent = nativeAd.mediaContent
+//    func adLoaderDidFinishLoading(_ adLoader: GADAdLoader) {
+//        // The adLoader has finished loading ads, and a new request can be sent.
+//    }
+//}
 
-      // Populate the native ad view with the native ad assets.
-      // The headline is guaranteed to be present in every native ad.
-      (nativeAdView.headlineView as? UILabel)?.text = nativeAd.headline
-
-      // These assets are not guaranteed to be present. Check that they are before
-      // showing or hiding them.
-      (nativeAdView.bodyView as? UILabel)?.text = nativeAd.body
-      nativeAdView.bodyView?.isHidden = nativeAd.body == nil
-
-      (nativeAdView.callToActionView as? UIButton)?.setTitle(nativeAd.callToAction, for: .normal)
-      nativeAdView.callToActionView?.isHidden = nativeAd.callToAction == nil
-
-      (nativeAdView.iconView as? UIImageView)?.image = nativeAd.icon?.image
-      nativeAdView.iconView?.isHidden = nativeAd.icon == nil
-
-//      (nativeAdView.starRatingView as? UIImageView)?.image = imageOfStars(fromStarRating:nativeAd.starRating)
-      nativeAdView.starRatingView?.isHidden = nativeAd.starRating == nil
-
-      (nativeAdView.storeView as? UILabel)?.text = nativeAd.store
-      nativeAdView.storeView?.isHidden = nativeAd.store == nil
-
-      (nativeAdView.priceView as? UILabel)?.text = nativeAd.price
-      nativeAdView.priceView?.isHidden = nativeAd.price == nil
-
-      (nativeAdView.advertiserView as? UILabel)?.text = nativeAd.advertiser
-      nativeAdView.advertiserView?.isHidden = nativeAd.advertiser == nil
-
-      // In order for the SDK to process touch events properly, user interaction
-      // should be disabled.
-      nativeAdView.callToActionView?.isUserInteractionEnabled = false
-    }
-    
-    func adLoaderDidFinishLoading(_ adLoader: GADAdLoader) {
-        // The adLoader has finished loading ads, and a new request can be sent.
-    }
-    
-    func nativeAdDidRecordImpression(_ nativeAd: GADUnifiedNativeAd) {
-      // The native ad was shown.
-    }
-
-    func nativeAdDidRecordClick(_ nativeAd: GADUnifiedNativeAd) {
-      // The native ad was clicked on.
-    }
-
-    func nativeAdWillPresentScreen(_ nativeAd: GADUnifiedNativeAd) {
-      // The native ad will present a full screen view.
-    }
-
-    func nativeAdWillDismissScreen(_ nativeAd: GADUnifiedNativeAd) {
-      // The native ad will dismiss a full screen view.
-    }
-
-    func nativeAdDidDismissScreen(_ nativeAd: GADUnifiedNativeAd) {
-      // The native ad did dismiss a full screen view.
-    }
-
-    func nativeAdWillLeaveApplication(_ nativeAd: GADUnifiedNativeAd) {
-      // The native ad will cause the application to become inactive and
-      // open a new application.
-    }
-}
+//extension DetailViewController : GADUnifiedNativeAdDelegate {
+//    func nativeAdDidRecordImpression(_ nativeAd: GADUnifiedNativeAd) {
+//      // The native ad was shown.
+//    }
+//
+//    func nativeAdDidRecordClick(_ nativeAd: GADUnifiedNativeAd) {
+//      // The native ad was clicked on.
+//    }
+//
+//    func nativeAdWillPresentScreen(_ nativeAd: GADUnifiedNativeAd) {
+//      // The native ad will present a full screen view.
+//    }
+//
+//    func nativeAdWillDismissScreen(_ nativeAd: GADUnifiedNativeAd) {
+//      // The native ad will dismiss a full screen view.
+//    }
+//
+//    func nativeAdDidDismissScreen(_ nativeAd: GADUnifiedNativeAd) {
+//      // The native ad did dismiss a full screen view.
+//    }
+//
+//    func nativeAdWillLeaveApplication(_ nativeAd: GADUnifiedNativeAd) {
+//      // The native ad will cause the application to become inactive and
+//      // open a new application.
+//    }
+//
+//}

@@ -7,6 +7,7 @@ target 'CallCenterContacts' do
 
   # Pods for CallCenterContacts
 	pod 'SnapKit', '~> 5.0.0'
+	pod 'Firebase/Auth'
 	pod 'Firebase/Core'
 	pod 'Firebase/Firestore'
 	pod 'FirebaseFirestoreSwift'

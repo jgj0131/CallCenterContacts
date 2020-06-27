@@ -25,6 +25,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         let db = Firestore.firestore()
         GADMobileAds.sharedInstance().start(completionHandler: nil)
+        
+        Auth.auth().signInAnonymously() { (authResult, error) in
+          // ...
+            guard let user = authResult?.user else { return }
+            let isAnonymous = user.isAnonymous  // true
+            let uid = user.uid
+        }
         sleep(2)
         return true
     }
