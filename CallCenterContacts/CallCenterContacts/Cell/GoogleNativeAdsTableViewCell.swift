@@ -55,12 +55,7 @@ class GoogleNativeAdTableViewCell: UITableViewCell {
     func setConstraint() {
         self.contentView.addSubview(iconView)
         self.contentView.addSubview(headlineLabel)
-//        self.contentView.addSubview(bodyLabel)
-//        self.contentView.addSubview(starRating)
         self.contentView.addSubview(adLavel)
-//        self.contentView.addSubview(advertiserLabel)
-//        self.contentView.addSubview(priceLabel)
-//        self.contentView.addSubview(callToAction)
         
         adLavel.snp.makeConstraints{ (make) in
             make.left.top.equalTo(self)

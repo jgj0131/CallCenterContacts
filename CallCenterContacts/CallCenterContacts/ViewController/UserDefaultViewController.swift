@@ -57,7 +57,7 @@ class UserDefaultViewController: UIViewController {
         contactsData.sort(by: { $0["name"] ?? "" < $1["name"] ?? "" })
         
         bannerView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
-        bannerView.adUnitID = Keys.bannerTestID.rawValue//Keys.userDefaultBannerAdID.rawValue
+        bannerView.adUnitID = Keys.userDefaultBannerAdID.rawValue
         bannerView.rootViewController = self
         bannerView.load(GADRequest())
         
@@ -278,7 +278,7 @@ class UserDefaultViewController: UIViewController {
             }
         }
         let cancel = UIAlertAction(title: Texts.cancle.rawValue, style: .cancel) { (cancel) in
-             //code
+             
         }
         alert.addAction(cancel)
         alert.addAction(ok)
@@ -286,7 +286,7 @@ class UserDefaultViewController: UIViewController {
     }
 }
 
-// MARK: Extension
+// MARK: Extension - TableView
 extension UserDefaultViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         self.setTotalContactsKey()
@@ -394,7 +394,7 @@ extension UserDefaultViewController: UISearchResultsUpdating {
     }
 }
 
-// MARK: Extension - BannerAd
+// MARK: Extension - GADBannerAd
 extension UserDefaultViewController: GADBannerViewDelegate {
     func addBannerViewToView(_ bannerView: GADBannerView) {
         bannerView.translatesAutoresizingMaskIntoConstraints = false

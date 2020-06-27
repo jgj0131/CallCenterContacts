@@ -43,10 +43,8 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         self.searchController.hidesNavigationBarDuringPresentation = true
         self.searchController.searchBar.placeholder = Texts.name.rawValue
         
-        
-        
         bannerView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
-        bannerView.adUnitID = Keys.bannerTestID.rawValue//Keys.bannerAdID.rawValue
+        bannerView.adUnitID = Keys.bannerAdID.rawValue
         bannerView.rootViewController = self
         bannerView.load(GADRequest())
         
@@ -91,6 +89,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         definesPresentationContext = true
     }
     
+    /// firestore 데이터를 읽어오는 메소드
     func setFireStoreData() {
         let db = Firestore.firestore()
         for index in 0..<firestoreCollectionList.count {
@@ -174,7 +173,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     }
 }
 
-// MARK: Extension
+// MARK: Extension - TableView
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isFiltering() {
@@ -227,13 +226,14 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-// MARK: Extension
+// MARK: Extension- UISearchResultsUpdating
 extension ViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         filterContentForSearchText(searchController.searchBar.text!)
     }
 }
 
+// MARK: Extension - GADBannerAd
 extension ViewController: GADBannerViewDelegate {
     func addBannerViewToView(_ bannerView: GADBannerView) {
         bannerView.translatesAutoresizingMaskIntoConstraints = false
