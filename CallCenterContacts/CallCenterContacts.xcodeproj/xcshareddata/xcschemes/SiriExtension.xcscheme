@@ -47,7 +47,7 @@
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
-      intentQueryString = "&#xc2e0;&#xd55c; &#xce74;&#xb4dc;&#xd55c;&#xd14c; &#xcf5c;&#xc13c;&#xd130;&#xbd81;&#xc73c;&#xb85c; &#xc804;&#xd654;&#xac78;&#xc5b4;&#xc918;"
+      intentQueryString = "&#xc2e0;&#xd55c;&#xc740;&#xd589;&#xd55c;&#xd14c; &#xcf5c;&#xc13c;&#xd130;&#xbd81;&#xc73c;&#xb85c; &#xc804;&#xd654; &#xac78;&#xc5b4;&#xc918;"
       selectedDebuggerIdentifier = ""
       selectedLauncherIdentifier = "Xcode.IDEFoundation.Launcher.PosixSpawn"
       launchStyle = "0"
@@ -58,17 +58,6 @@
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES"
       launchAutomaticallySubstyle = "2">
-      <RemoteRunnable
-         runnableDebuggingMode = "2"
-         BundleIdentifier = "com.apple.notificationcenterui">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "1591854D2428FD8B00D75673"
-            BuildableName = "SiriExtension.appex"
-            BlueprintName = "SiriExtension"
-            ReferencedContainer = "container:CallCenterContacts.xcodeproj">
-         </BuildableReference>
-      </RemoteRunnable>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
@@ -81,7 +70,7 @@
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
-      intentQueryString = "&#xc2e0;&#xd55c; &#xce74;&#xb4dc;&#xd55c;&#xd14c; &#xcf5c;&#xc13c;&#xd130;&#xbd81;&#xc73c;&#xb85c; &#xc804;&#xd654;&#xac78;&#xc5b4;&#xc918;"
+      intentQueryString = "&#xc2e0;&#xd55c;&#xc740;&#xd589;&#xd55c;&#xd14c; &#xcf5c;&#xc13c;&#xd130;&#xbd81;&#xc73c;&#xb85c; &#xc804;&#xd654; &#xac78;&#xc5b4;&#xc918;"
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"

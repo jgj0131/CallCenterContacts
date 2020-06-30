@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		150381E524A85D5A002C908B /* AppIntentVocabulary.plist in Resources */ = {isa = PBXBuildFile; fileRef = 150381E424A85D5A002C908B /* AppIntentVocabulary.plist */; };
 		1510EFF9243CB7AF00E6ECE6 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1510EFF8243CB7AF00E6ECE6 /* TableViewCell.swift */; };
 		15918509241DC4C300D75673 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15918508241DC4C300D75673 /* AppDelegate.swift */; };
 		1591850B241DC4C300D75673 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1591850A241DC4C300D75673 /* SceneDelegate.swift */; };
@@ -73,6 +74,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		150381E424A85D5A002C908B /* AppIntentVocabulary.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = AppIntentVocabulary.plist; sourceTree = "<group>"; };
 		1510EFE2242F646500E6ECE6 /* SiriExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SiriExtension.entitlements; sourceTree = "<group>"; };
 		1510EFF8243CB7AF00E6ECE6 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		15918505241DC4C300D75673 /* 콜센터북.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "콜센터북.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -187,6 +189,7 @@
 		15918507241DC4C300D75673 /* CallCenterContacts */ = {
 			isa = PBXGroup;
 			children = (
+				150381E424A85D5A002C908B /* AppIntentVocabulary.plist */,
 				15A93BC52488188A005852BE /* Xib */,
 				15F6911C245073EA00D26CFE /* Texts */,
 				1510EFF7243CB78500E6ECE6 /* Cell */,
@@ -426,6 +429,7 @@
 			files = (
 				15918515241DC4C500D75673 /* LaunchScreen.storyboard in Resources */,
 				15918541241E77CD00D75673 /* GoogleService-Info.plist in Resources */,
+				150381E524A85D5A002C908B /* AppIntentVocabulary.plist in Resources */,
 				15918512241DC4C500D75673 /* Assets.xcassets in Resources */,
 				15A93BCD248CF76C005852BE /* UnifiedNativeAdCell.xib in Resources */,
 				15918510241DC4C300D75673 /* Main.storyboard in Resources */,
@@ -765,12 +769,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = CallCenterContacts/CallCenterContacts.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = A6T7UT6A2N;
 				INFOPLIST_FILE = CallCenterContacts/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "jang-gukjin.CallCenterContacts";
 				PRODUCT_NAME = "콜센터북";
 				SWIFT_VERSION = 5.0;
@@ -786,12 +792,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = CallCenterContacts/CallCenterContacts.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = A6T7UT6A2N;
 				INFOPLIST_FILE = CallCenterContacts/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "jang-gukjin.CallCenterContacts";
 				PRODUCT_NAME = "콜센터북";
 				SWIFT_VERSION = 5.0;
@@ -892,6 +900,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = SiriExtension/SiriExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = A6T7UT6A2N;
 				INFOPLIST_FILE = SiriExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -899,6 +908,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
+				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "jang-gukjin.CallCenterContacts.SiriExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -911,7 +921,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = SiriExtension/SiriExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = A6T7UT6A2N;
 				INFOPLIST_FILE = SiriExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -919,8 +931,10 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
+				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "jang-gukjin.CallCenterContacts.SiriExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

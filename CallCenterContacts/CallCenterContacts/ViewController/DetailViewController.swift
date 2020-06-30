@@ -49,11 +49,23 @@ class DetailViewController: UIViewController {
         let collectionLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         collectionLayout.scrollDirection = .horizontal
         if UIDevice.current.userInterfaceIdiom == .pad {
-            collectionLayout.itemSize = CGSize(width: self.view.bounds.height/24.8, height: self.view.bounds.height/24.8)
+            if UIDevice.current.orientation.isLandscape {
+                collectionLayout.itemSize = CGSize(width: self.view.bounds.height/18.6, height: self.view.bounds.height/18.6)
+            } else {
+                collectionLayout.itemSize = CGSize(width: self.view.bounds.width/18.6, height: self.view.bounds.width/18.6)
+            }
         } else {
             collectionLayout.itemSize = CGSize(width: self.view.bounds.height/25, height: self.view.bounds.height/25)
         }
-        collectionLayout.minimumLineSpacing = self.view.bounds.height/25
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            if UIDevice.current.orientation.isLandscape {
+                collectionLayout.minimumLineSpacing = self.view.bounds.height/18.6
+            } else {
+                collectionLayout.minimumLineSpacing = self.view.bounds.width/18.6
+            }
+        } else {
+            collectionLayout.minimumLineSpacing = self.view.bounds.height/25
+        }
         collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: collectionLayout)
         
         bannerView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
@@ -338,6 +350,16 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
         cell.iconImage.image = UIImage(named: firestoreCollectionList[indexPath.row] + "_disable")
     }
 }
+
+//extension DetailViewController: UICollectionViewDelegateFlowLayout {
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        if UIDevice.current.userInterfaceIdiom == .pad {
+//            return CGSize(width: self.view.bounds.width/18.6, height: self.view.bounds.width/18.6)
+//        } else {
+//            return CGSize(width: self.view.bounds.height/25, height: self.view.bounds.height/25)
+//        }
+//    }
+//}
 
 // MARK: Extension - TableView
 extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
