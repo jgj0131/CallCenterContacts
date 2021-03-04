@@ -9,6 +9,15 @@
 /* Begin PBXBuildFile section */
 		150381E524A85D5A002C908B /* AppIntentVocabulary.plist in Resources */ = {isa = PBXBuildFile; fileRef = 150381E424A85D5A002C908B /* AppIntentVocabulary.plist */; };
 		1510EFF9243CB7AF00E6ECE6 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1510EFF8243CB7AF00E6ECE6 /* TableViewCell.swift */; };
+		156F6F3E25F109EE006827A2 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156F6F3D25F109EE006827A2 /* UserTableViewCell.swift */; };
+		156F6F4625F10F7C006827A2 /* Nexa Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 156F6F4425F10F7C006827A2 /* Nexa Light.otf */; };
+		156F6F4725F10F7C006827A2 /* Nexa Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 156F6F4525F10F7C006827A2 /* Nexa Bold.otf */; };
+		156F6F5225F113AF006827A2 /* NotoSansKR-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 156F6F4C25F113AF006827A2 /* NotoSansKR-Light.otf */; };
+		156F6F5325F113AF006827A2 /* NotoSansKR-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 156F6F4D25F113AF006827A2 /* NotoSansKR-Regular.otf */; };
+		156F6F5425F113AF006827A2 /* NotoSansKR-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 156F6F4E25F113AF006827A2 /* NotoSansKR-Thin.otf */; };
+		156F6F5525F113AF006827A2 /* NotoSansKR-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 156F6F4F25F113AF006827A2 /* NotoSansKR-Black.otf */; };
+		156F6F5625F113AF006827A2 /* NotoSansKR-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 156F6F5025F113AF006827A2 /* NotoSansKR-Medium.otf */; };
+		156F6F5725F113AF006827A2 /* NotoSansKR-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 156F6F5125F113AF006827A2 /* NotoSansKR-Bold.otf */; };
 		15918509241DC4C300D75673 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15918508241DC4C300D75673 /* AppDelegate.swift */; };
 		1591850B241DC4C300D75673 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1591850A241DC4C300D75673 /* SceneDelegate.swift */; };
 		1591850D241DC4C300D75673 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1591850C241DC4C300D75673 /* ViewController.swift */; };
@@ -77,6 +86,15 @@
 		150381E424A85D5A002C908B /* AppIntentVocabulary.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = AppIntentVocabulary.plist; sourceTree = "<group>"; };
 		1510EFE2242F646500E6ECE6 /* SiriExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SiriExtension.entitlements; sourceTree = "<group>"; };
 		1510EFF8243CB7AF00E6ECE6 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		156F6F3D25F109EE006827A2 /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
+		156F6F4425F10F7C006827A2 /* Nexa Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nexa Light.otf"; sourceTree = "<group>"; };
+		156F6F4525F10F7C006827A2 /* Nexa Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nexa Bold.otf"; sourceTree = "<group>"; };
+		156F6F4C25F113AF006827A2 /* NotoSansKR-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Light.otf"; sourceTree = "<group>"; };
+		156F6F4D25F113AF006827A2 /* NotoSansKR-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.otf"; sourceTree = "<group>"; };
+		156F6F4E25F113AF006827A2 /* NotoSansKR-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Thin.otf"; sourceTree = "<group>"; };
+		156F6F4F25F113AF006827A2 /* NotoSansKR-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Black.otf"; sourceTree = "<group>"; };
+		156F6F5025F113AF006827A2 /* NotoSansKR-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Medium.otf"; sourceTree = "<group>"; };
+		156F6F5125F113AF006827A2 /* NotoSansKR-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Bold.otf"; sourceTree = "<group>"; };
 		15918505241DC4C300D75673 /* 콜센터북.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "콜센터북.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		15918508241DC4C300D75673 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1591850A241DC4C300D75673 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -158,8 +176,24 @@
 				1510EFF8243CB7AF00E6ECE6 /* TableViewCell.swift */,
 				15F69121246FD74400D26CFE /* CollectionViewCell.swift */,
 				15A93BC6248BA09C005852BE /* GoogleNativeAdsTableViewCell.swift */,
+				156F6F3D25F109EE006827A2 /* UserTableViewCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		156F6F4325F10F6C006827A2 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				156F6F4F25F113AF006827A2 /* NotoSansKR-Black.otf */,
+				156F6F5125F113AF006827A2 /* NotoSansKR-Bold.otf */,
+				156F6F4C25F113AF006827A2 /* NotoSansKR-Light.otf */,
+				156F6F5025F113AF006827A2 /* NotoSansKR-Medium.otf */,
+				156F6F4D25F113AF006827A2 /* NotoSansKR-Regular.otf */,
+				156F6F4E25F113AF006827A2 /* NotoSansKR-Thin.otf */,
+				156F6F4525F10F7C006827A2 /* Nexa Bold.otf */,
+				156F6F4425F10F7C006827A2 /* Nexa Light.otf */,
+			);
+			path = Font;
 			sourceTree = "<group>";
 		};
 		159184FC241DC4C300D75673 = {
@@ -189,6 +223,7 @@
 		15918507241DC4C300D75673 /* CallCenterContacts */ = {
 			isa = PBXGroup;
 			children = (
+				156F6F4325F10F6C006827A2 /* Font */,
 				150381E424A85D5A002C908B /* AppIntentVocabulary.plist */,
 				15A93BC52488188A005852BE /* Xib */,
 				15F6911C245073EA00D26CFE /* Texts */,
@@ -428,11 +463,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				15918515241DC4C500D75673 /* LaunchScreen.storyboard in Resources */,
+				156F6F4725F10F7C006827A2 /* Nexa Bold.otf in Resources */,
+				156F6F5625F113AF006827A2 /* NotoSansKR-Medium.otf in Resources */,
 				15918541241E77CD00D75673 /* GoogleService-Info.plist in Resources */,
+				156F6F5525F113AF006827A2 /* NotoSansKR-Black.otf in Resources */,
 				150381E524A85D5A002C908B /* AppIntentVocabulary.plist in Resources */,
+				156F6F5325F113AF006827A2 /* NotoSansKR-Regular.otf in Resources */,
 				15918512241DC4C500D75673 /* Assets.xcassets in Resources */,
+				156F6F5725F113AF006827A2 /* NotoSansKR-Bold.otf in Resources */,
 				15A93BCD248CF76C005852BE /* UnifiedNativeAdCell.xib in Resources */,
+				156F6F5225F113AF006827A2 /* NotoSansKR-Light.otf in Resources */,
 				15918510241DC4C300D75673 /* Main.storyboard in Resources */,
+				156F6F5425F113AF006827A2 /* NotoSansKR-Thin.otf in Resources */,
+				156F6F4625F10F7C006827A2 /* Nexa Light.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -571,6 +614,7 @@
 				15918509241DC4C300D75673 /* AppDelegate.swift in Sources */,
 				15A93BC7248BA09C005852BE /* GoogleNativeAdsTableViewCell.swift in Sources */,
 				15F69122246FD74400D26CFE /* CollectionViewCell.swift in Sources */,
+				156F6F3E25F109EE006827A2 /* UserTableViewCell.swift in Sources */,
 				15A93BCF248D4902005852BE /* UnifiedNativeAdCell.swift in Sources */,
 				1591856F24290B1900D75673 /* SiriDataManager.swift in Sources */,
 				1591850B241DC4C300D75673 /* SceneDelegate.swift in Sources */,

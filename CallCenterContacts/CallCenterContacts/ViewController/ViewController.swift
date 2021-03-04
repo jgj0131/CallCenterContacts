@@ -24,7 +24,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UISearchBar
     let firestoreCollectionList = ["emergency", "finance", "culture", "civil complaint", "real property", "shopping", "security", "travel", "medical"]
     let searchController: UISearchController = {
         let search = UISearchController(searchResultsController: nil)
-        search.obscuresBackgroundDuringPresentation = true
+        search.obscuresBackgroundDuringPresentation = false
         search.hidesNavigationBarDuringPresentation = true
         search.definesPresentationContext = true
         search.searchBar.placeholder = Texts.name.rawValue
@@ -51,6 +51,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UISearchBar
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.tableView.register(UserTableViewCell.self, forCellReuseIdentifier: UserTableViewCell.identifier)
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         self.navigationController?.navigationBar.prefersLargeTitles = true
         
@@ -111,10 +112,12 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UISearchBar
         navigationItem.title = Texts.title.rawValue
 //        navigationController?.navigationBar.barTintColor = UIColor(red: 0, green: 171/255, blue: 142/255, alpha: 1)
         
+        let attributes = [NSAttributedString.Key.font: UIFont(name: "Nexa Bold", size: UIScreen.main.bounds.height * 0.03)!, .foregroundColor: UIColor.white]
+        let largeAttributes = [NSAttributedString.Key.font: UIFont(name: "Nexa Bold", size: UIScreen.main.bounds.height * 0.06)!, .foregroundColor: UIColor.white]
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = UIColor(red: 0, green: 171/255, blue: 142/255, alpha: 1)
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+        appearance.titleTextAttributes = attributes
+        appearance.largeTitleTextAttributes = largeAttributes
 
         navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.standardAppearance = appearance
@@ -215,6 +218,10 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UISearchBar
 
 // MARK: Extension - TableView
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UIScreen.main.bounds.height / 17
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isFiltering() {
             return filteredContacts.count
@@ -224,7 +231,21 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: UserTableViewCell.identifier) as? UserTableViewCell else{
+            return UITableViewCell()
+        }
+        if indexPath.row == 0 {
+            cell.editButton.setImage(UIImage(named: firestoreCollectionList[indexPath.row] + "_disable"), for: .normal)
+        } else if indexPath.row < firestoreCollectionList.count {
+            cell.editButton.setImage(UIImage(named: firestoreCollectionList[indexPath.row] + "_enable"), for: .normal)
+        } else {
+            cell.editButton.setImage(UIImage(named: "edit"), for: .normal)
+        }
+        cell.editButton.isEnabled = false
+        cell.editButton.snp.makeConstraints{ (make) in
+            make.centerY.equalTo(cell)
+            make.right.equalTo(cell).offset(-(UIScreen.main.bounds.width / 22))
+        }
         if isFiltering(){
             let contactToDisplay:[String:Any]
             contactToDisplay = filteredContacts[indexPath.row]
@@ -238,7 +259,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             }
             cell.textLabel?.snp.makeConstraints{ (make) in
                 make.centerY.equalTo(cell)
+                make.height.equalTo(cell)
                 make.left.equalTo(cell).offset(UIScreen.main.bounds.width / 22)
+                make.right.equalTo(cell.editButton.snp.left)
             }
         }
         cell.separatorInset = .zero

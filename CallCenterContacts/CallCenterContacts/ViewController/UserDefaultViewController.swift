@@ -29,8 +29,8 @@ class UserDefaultViewController: UIViewController {
     private var  contactsData: [[String:String]] = []
     let searchController: UISearchController = {
         let search = UISearchController(searchResultsController: nil)
-        search.obscuresBackgroundDuringPresentation = true
-        search.hidesNavigationBarDuringPresentation = false
+        search.obscuresBackgroundDuringPresentation = false
+        search.hidesNavigationBarDuringPresentation = true
         search.searchBar.placeholder = Texts.name.rawValue
 //        search.searchBar.barTintColor = .systemBackground
 //        search.searchBar.tintColor = .secondaryLabel
@@ -64,8 +64,8 @@ class UserDefaultViewController: UIViewController {
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.tableView.register(UserTableViewCell.self, forCellReuseIdentifier: UserTableViewCell.identifier)
         self.searchController.searchResultsUpdater = self
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "userCell")
         
         contactsData = UserDefaults.standard.object(forKey: "userData") as? [[String : String]] ?? []
         contactsData.sort(by: { $0["name"] ?? "" < $1["name"] ?? "" })
@@ -251,45 +251,58 @@ class UserDefaultViewController: UIViewController {
                     overlapState = .anotheListOverlap
                 }
             }
-            
             for data in self.contactsData {
                 if data["name"]?.lowercased() == value["name"]?.lowercased() {
                     overlapState = .userDataOverlap
                 }
             }
-            if !self.contactsData.contains(value), overlapState == .notOverlap {
-                self.contactsData.append(value)
-                
-                if self.totalContactsKey[self.prefixKorean(name: value["name"] ?? "")] == nil {
-                    self.setTotalContactsKey()
-                    self.tableView.beginUpdates()
-                    let sectionNumber = self.contactSectionTitles.firstIndex(of: self.prefixKorean(name: value["name"] ?? "")) ?? 0
-                    self.tableView.insertSections(IndexSet(integer: sectionNumber), with: .automatic)
-                    self.tableView.insertRows(at: [IndexPath(row: 0, section: sectionNumber)], with: .automatic)
-                    self.tableView.endUpdates()
-                    UserDefaults.standard.set(self.contactsData, forKey: "userData")
-                    SiriDataManager.sharedManager.saveContacts(contacts: self.savedContacts)
-                } else {
-                    self.setTotalContactsKey()
-                    let keysValue = self.totalContactsKey[self.prefixKorean(name: value["name"] ?? "")]
-                    self.tableView.beginUpdates()
-                    self.tableView.insertRows(at: [IndexPath(row: keysValue!.count - 1, section: self.contactSectionTitles.firstIndex(of: self.prefixKorean(name: value["name"] ?? "")) ?? 0)], with: .automatic)
-                    self.tableView.endUpdates()
-                    UserDefaults.standard.set(self.contactsData, forKey: "userData")
-                    SiriDataManager.sharedManager.saveContacts(contacts: self.savedContacts)
-                }
-            } else if overlapState == .anotheListOverlap {
-                let overlapAlert = UIAlertController(title: Texts.anotherListOverlapTitle.rawValue, message: Texts.anotherListOverlapMessage.rawValue, preferredStyle: .alert)
+            if value["name"] == "" {
+                let emptyAlert = UIAlertController(title: Texts.fail.rawValue, message: Texts.emptyName.rawValue, preferredStyle: .alert)
                 let confirm = UIAlertAction(title: Texts.confirm.rawValue, style: .cancel) { (cancle) in
                 }
-                overlapAlert.addAction(confirm)
-                self.present(overlapAlert, animated: true, completion: nil)
+                emptyAlert.addAction(confirm)
+                self.present(emptyAlert, animated: true, completion: nil)
+            } else if value["number"] == "" {
+                let emptyAlert = UIAlertController(title: Texts.fail.rawValue, message: Texts.emptyNumber.rawValue, preferredStyle: .alert)
+                let confirm = UIAlertAction(title: Texts.confirm.rawValue, style: .cancel) { (cancle) in
+                }
+                emptyAlert.addAction(confirm)
+                self.present(emptyAlert, animated: true, completion: nil)
             } else {
-                let overlapAlert = UIAlertController(title: Texts.overlap.rawValue, message: Texts.overlapMessage.rawValue, preferredStyle: .alert)
-                let confirm = UIAlertAction(title: Texts.confirm.rawValue, style: .cancel) { (cancle) in
+                if !self.contactsData.contains(value), overlapState == .notOverlap {
+                    self.contactsData.append(value)
+                    
+                    if self.totalContactsKey[self.prefixKorean(name: value["name"] ?? "")] == nil {
+                        self.setTotalContactsKey()
+                        self.tableView.beginUpdates()
+                        let sectionNumber = self.contactSectionTitles.firstIndex(of: self.prefixKorean(name: value["name"] ?? "")) ?? 0
+                        self.tableView.insertSections(IndexSet(integer: sectionNumber), with: .automatic)
+                        self.tableView.insertRows(at: [IndexPath(row: 0, section: sectionNumber)], with: .automatic)
+                        self.tableView.endUpdates()
+                        UserDefaults.standard.set(self.contactsData, forKey: "userData")
+                        SiriDataManager.sharedManager.saveContacts(contacts: self.savedContacts)
+                    } else {
+                        self.setTotalContactsKey()
+                        let keysValue = self.totalContactsKey[self.prefixKorean(name: value["name"] ?? "")]
+                        self.tableView.beginUpdates()
+                        self.tableView.insertRows(at: [IndexPath(row: keysValue!.count - 1, section: self.contactSectionTitles.firstIndex(of: self.prefixKorean(name: value["name"] ?? "")) ?? 0)], with: .automatic)
+                        self.tableView.endUpdates()
+                        UserDefaults.standard.set(self.contactsData, forKey: "userData")
+                        SiriDataManager.sharedManager.saveContacts(contacts: self.savedContacts)
+                    }
+                } else if overlapState == .anotheListOverlap {
+                    let overlapAlert = UIAlertController(title: Texts.anotherListOverlapTitle.rawValue, message: Texts.anotherListOverlapMessage.rawValue, preferredStyle: .alert)
+                    let confirm = UIAlertAction(title: Texts.confirm.rawValue, style: .cancel) { (cancle) in
+                    }
+                    overlapAlert.addAction(confirm)
+                    self.present(overlapAlert, animated: true, completion: nil)
+                } else {
+                    let overlapAlert = UIAlertController(title: Texts.overlap.rawValue, message: Texts.overlapMessage.rawValue, preferredStyle: .alert)
+                    let confirm = UIAlertAction(title: Texts.confirm.rawValue, style: .cancel) { (cancle) in
+                    }
+                    overlapAlert.addAction(confirm)
+                    self.present(overlapAlert, animated: true, completion: nil)
                 }
-                overlapAlert.addAction(confirm)
-                self.present(overlapAlert, animated: true, completion: nil)
             }
         }
         let cancel = UIAlertAction(title: Texts.cancle.rawValue, style: .cancel) { (cancel) in
@@ -330,6 +343,10 @@ extension UserDefaultViewController: UITableViewDelegate, UITableViewDataSource 
         }
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UIScreen.main.bounds.height / 17
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         self.setTotalContactsKey()
         if isFiltering() {
@@ -344,7 +361,9 @@ extension UserDefaultViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath) as UITableViewCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: UserTableViewCell.identifier) as? UserTableViewCell else{
+            return UITableViewCell()
+        }
         cell.selectionStyle = .default
         let contactToDisplay:[String:Any]
         if isFiltering(){
@@ -358,7 +377,9 @@ extension UserDefaultViewController: UITableViewDelegate, UITableViewDataSource 
         }
         cell.textLabel?.snp.makeConstraints{ (make) in
             make.centerY.equalTo(cell)
+            make.height.equalTo(cell)
             make.left.equalTo(cell).offset(UIScreen.main.bounds.width / 22)
+            make.right.equalTo(cell.editButton.snp.left)
         }
         cell.separatorInset = .zero
         return cell

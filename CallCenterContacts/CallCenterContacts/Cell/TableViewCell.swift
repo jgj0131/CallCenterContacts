@@ -75,6 +75,9 @@ class TableViewCell: UITableViewCell {
         }
         homepageButton.addTarget(self, action: #selector(touchUpHomePage(_:)), for: .touchUpInside)
         
+        textLabel?.font = UIFont(name: "NotoSansKR-Regular", size: UIScreen.main.bounds.width * 0.045)
+        textLabel?.font = textLabel?.font.withSize(UIScreen.main.bounds.width * 0.045)
+        textLabel?.adjustsFontSizeToFitWidth = true
         if UIDevice.current.userInterfaceIdiom == .pad {
             textLabel?.textAlignment = .left
             textLabel?.snp.makeConstraints{ (make) in

@@ -38,8 +38,8 @@ class DetailViewController: UIViewController {
     private var  userContactsData: [[String:String]] = []
     let searchController: UISearchController = {
         let search = UISearchController(searchResultsController: nil)
-        search.obscuresBackgroundDuringPresentation = true
-        search.hidesNavigationBarDuringPresentation = false
+        search.obscuresBackgroundDuringPresentation = false
+        search.hidesNavigationBarDuringPresentation = true
         search.searchBar.placeholder = Texts.name.rawValue
         if let textfield = search.searchBar.value(forKey: "searchField") as? UITextField {
             textfield.backgroundColor = .systemBackground
@@ -159,18 +159,7 @@ class DetailViewController: UIViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
         definesPresentationContext = true
         navigationController?.navigationBar.isHidden = false
-        navigationItem.title = Texts.title.rawValue
-//        if listIndex == 0 {
-//            navigationController?.navigationBar.barTintColor = UIColor(red: 1, green: 100/255, blue: 78/255, alpha: 1)
-//        } else {
-//            navigationController?.navigationBar.barTintColor = UIColor(red: 0, green: 171/255, blue: 142/255, alpha: 1)
-//        }
-//        let targetView = self.navigationController?.navigationBar
-//        targetView?.addSubview(titleLabel)
-//        titleLabel.centerXAnchor.constraint(equalTo: (targetView?.centerXAnchor)!).isActive = true
-//        titleLabel.topAnchor.constraint(equalTo: (targetView?.topAnchor)!, constant: 10).isActive = true
-        
-        
+        navigationItem.title = Texts.title.rawValue        
         let buttonIcon = UIImage(named: "back")
         let buttonIconSize = CGRect(origin: CGPoint.zero, size: CGSize(width: 5, height: 5))
         let button = UIButton(frame: buttonIconSize)
@@ -434,6 +423,10 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UIScreen.main.bounds.height / 17
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         userContactsData = UserDefaults.standard.object(forKey: "userData") as? [[String : String]] ?? []
         guard let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.identifier) as? TableViewCell else{
@@ -465,6 +458,12 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.changeStar(value: cell.favoriteState)
                 cell.setUserDefaults(contacts: userContactsData, value: contactToString[indexPath.row])
             }
+        }
+        cell.textLabel?.snp.makeConstraints{ (make) in
+            make.centerY.equalTo(cell)
+            make.height.equalTo(cell)
+            make.left.equalTo(cell).offset(UIScreen.main.bounds.width / 22)
+            make.right.equalTo(cell.homepageButton.snp.left)
         }
         cell.separatorInset = .zero
         return cell
