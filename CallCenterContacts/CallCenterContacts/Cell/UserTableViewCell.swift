@@ -12,8 +12,8 @@ import SnapKit
 class UserTableViewCell: UITableViewCell {
 
     // MARK: UI Property
-    lazy var editButton: UIButton = {
-        let button = UIButton()
+    lazy var editButton: EditButton = {
+        let button = EditButton()
         button.setImage(UIImage(named: "edit"), for: .normal)
         button.contentMode = .scaleAspectFit
         return button
@@ -72,4 +72,9 @@ class UserTableViewCell: UITableViewCell {
             }
         }
     }
+}
+
+class EditButton: UIButton {
+    var section: Int?
+    var row: Int?
 }

@@ -112,8 +112,8 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UISearchBar
         navigationItem.title = Texts.title.rawValue
 //        navigationController?.navigationBar.barTintColor = UIColor(red: 0, green: 171/255, blue: 142/255, alpha: 1)
         
-        let attributes = [NSAttributedString.Key.font: UIFont(name: "Nexa Bold", size: UIScreen.main.bounds.height * 0.03)!, .foregroundColor: UIColor.white]
-        let largeAttributes = [NSAttributedString.Key.font: UIFont(name: "Nexa Bold", size: UIScreen.main.bounds.height * 0.06)!, .foregroundColor: UIColor.white]
+        let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: UIScreen.main.bounds.height * 0.03), .foregroundColor: UIColor.white]
+        let largeAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: UIScreen.main.bounds.height * 0.06), .foregroundColor: UIColor.white]
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = UIColor(red: 0, green: 171/255, blue: 142/255, alpha: 1)
         appearance.titleTextAttributes = attributes

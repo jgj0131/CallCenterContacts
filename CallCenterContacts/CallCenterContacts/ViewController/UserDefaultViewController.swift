@@ -130,6 +130,108 @@ class UserDefaultViewController: UIViewController {
         navigationItem.leftBarButtonItem = barBackButton
     }
     
+    // MARK: Custom Method
+    /// 저장된 번호를 Edit
+    @objc
+    func editContact(_ sender: EditButton) {
+        let contactKey = contactSectionTitles[sender.section ?? 0]
+        var currentContact: [String:String] = [:]
+        currentContact["name"] = (totalContactsKey[contactSectionTitles[sender.section ?? 0]]?[sender.row ?? 0]["name"])
+        currentContact["number"] = (totalContactsKey[contactSectionTitles[sender.section ?? 0]]?[sender.row ?? 0]["number"])
+        let alert = UIAlertController(title: Texts.editTitle.rawValue, message: Texts.editContents.rawValue, preferredStyle: .alert)
+        alert.addTextField { (name) in
+            name.placeholder = Texts.name.rawValue
+            if let contactValues = self.totalContactsKey[contactKey] {
+                name.text = contactValues[sender.row ?? 0]["name"]
+            }
+        }
+        alert.addTextField { (number) in
+            number.placeholder = Texts.number.rawValue
+            if let contactValues = self.totalContactsKey[contactKey] {
+                number.text = contactValues[sender.row ?? 0]["number"]
+            }
+        }
+        let ok = UIAlertAction(title: Texts.confirm.rawValue, style: .default) { (ok) in
+            var overlapState: overlapState = .notOverlap
+            var value = ["name": "", "number": ""]
+            self.savedContacts = self.userDefaults?.object(forKey: SiriDataManager.sharedSuiteName) as? [[String: String]] ?? []
+            value["name"] = alert.textFields?[0].text
+            value["number"] = self.matches(in: alert.textFields?[1].text ?? "")
+            let index = self.contactsData.firstIndex(of: currentContact)
+//            self.tableView.performBatchUpdates({
+//            self.setTotalContactsKey()
+//            if (self.totalContactsKey[self.contactSectionTitles[sender.section ?? 0]] ?? []).count == 1 {
+//                self.tableView.performBatchUpdates({
+//                    self.setTotalContactsKey()
+//                    self.tableView.deleteSections(IndexSet(integer: sender.section ?? 0), with: .automatic)
+//                }, completion: nil)
+//            } else {
+//                self.tableView.performBatchUpdates({
+//                    self.setTotalContactsKey()
+//                    self.tableView.deleteRows(at: [IndexPath(row: sender.row ?? 0, section: sender.section ?? 0)], with: .automatic)
+//                }, completion: nil)
+//            }
+
+            for data in self.savedContacts {
+                if data["name"]?.lowercased() == value["name"]?.lowercased() {
+                    overlapState = .anotheListOverlap
+                }
+            }
+            for data in self.contactsData {
+                if data["name"]?.lowercased() == value["name"]?.lowercased() {
+                    overlapState = .userDataOverlap
+                }
+            }
+            if value["name"] == "" {
+                let emptyAlert = UIAlertController(title: Texts.fail.rawValue, message: Texts.emptyName.rawValue, preferredStyle: .alert)
+                let confirm = UIAlertAction(title: Texts.confirm.rawValue, style: .cancel) { (cancle) in
+                }
+                emptyAlert.addAction(confirm)
+                self.present(emptyAlert, animated: true, completion: nil)
+            } else if value["number"] == "" {
+                let emptyAlert = UIAlertController(title: Texts.fail.rawValue, message: Texts.emptyNumber.rawValue, preferredStyle: .alert)
+                let confirm = UIAlertAction(title: Texts.confirm.rawValue, style: .cancel) { (cancle) in
+                }
+                emptyAlert.addAction(confirm)
+                self.present(emptyAlert, animated: true, completion: nil)
+            } else {
+                if !self.contactsData.contains(value), overlapState == .notOverlap {
+                    self.contactsData[index ?? 0] = value
+                    self.contactsData.sort(by: { $0["name"] ?? "" < $1["name"] ?? "" })
+                    self.tableView.reloadData()
+                    UserDefaults.standard.set(self.contactsData, forKey: "userData")
+                    SiriDataManager.sharedManager.saveContacts(contacts: self.savedContacts)
+                } else if overlapState == .anotheListOverlap {
+                    let overlapAlert = UIAlertController(title: Texts.anotherListOverlapTitle.rawValue, message: Texts.anotherListOverlapMessage.rawValue, preferredStyle: .alert)
+                    let confirm = UIAlertAction(title: Texts.confirm.rawValue, style: .cancel) { (cancle) in
+                    }
+                    overlapAlert.addAction(confirm)
+                    self.present(overlapAlert, animated: true, completion: nil)
+                } else {
+                    let overlapAlert = UIAlertController(title: Texts.overlap.rawValue, message: Texts.overlapMessage.rawValue, preferredStyle: .alert)
+                    let confirm = UIAlertAction(title: Texts.confirm.rawValue, style: .cancel) { (cancle) in
+                    }
+                    overlapAlert.addAction(confirm)
+                    self.present(overlapAlert, animated: true, completion: nil)
+                }
+            }
+                
+//                self.tableView.reloadData()
+//            }, completion: nil)
+//            UserDefaults.standard.set(self.contactsData, forKey: "userData")
+//            SiriDataManager.sharedManager.saveContacts(contacts: self.savedContacts)
+        
+            let completeAlert = UIAlertController(title: Texts.editCompleteTitle.rawValue, message: Texts.editCompleteContents.rawValue, preferredStyle: .alert)
+            let completeOk = UIAlertAction(title: Texts.confirm.rawValue, style: .default) { (ok) in }
+            completeAlert.addAction(completeOk)
+            self.present(completeAlert, animated: true, completion: nil)
+        }
+        let cancel = UIAlertAction(title: Texts.cancel.rawValue, style: .default) { (cancel) in}
+        alert.addAction(cancel)
+        alert.addAction(ok)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     /// navigationController에서 pop하는 메소드
     @objc
     func popView(_ sender: UIButton) {
@@ -305,7 +407,7 @@ class UserDefaultViewController: UIViewController {
                 }
             }
         }
-        let cancel = UIAlertAction(title: Texts.cancle.rawValue, style: .cancel) { (cancel) in
+        let cancel = UIAlertAction(title: Texts.cancel.rawValue, style: .cancel) { (cancel) in
              
         }
         alert.addAction(cancel)
@@ -375,12 +477,15 @@ extension UserDefaultViewController: UITableViewDelegate, UITableViewDataSource 
                 cell.textLabel?.text = contactValues[indexPath.row]["name"]
             }
         }
+        cell.editButton.section = indexPath.section
+        cell.editButton.row = indexPath.row
         cell.textLabel?.snp.makeConstraints{ (make) in
             make.centerY.equalTo(cell)
             make.height.equalTo(cell)
             make.left.equalTo(cell).offset(UIScreen.main.bounds.width / 22)
             make.right.equalTo(cell.editButton.snp.left)
         }
+        cell.editButton.addTarget(self, action: #selector(editContact(_:)), for: .touchUpInside)
         cell.separatorInset = .zero
         return cell
     }
@@ -518,3 +623,4 @@ extension UserDefaultViewController: GADBannerViewDelegate {
         print("adViewWillLeaveApplication")
     }
 }
+
