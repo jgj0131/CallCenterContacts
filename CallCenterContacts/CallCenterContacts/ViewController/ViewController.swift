@@ -13,7 +13,7 @@ import FirebaseFirestore
 import Intents
 import GoogleMobileAds
 
-class ViewController: UIViewController, UIGestureRecognizerDelegate {
+class ViewController: UIViewController, UIGestureRecognizerDelegate, UISearchBarDelegate {
 
     // MARK: UI Property
     lazy var tableView = UITableView()
@@ -22,7 +22,22 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     // MARK: Property
     let contactsList = ["긴급", "금융", "문화", "민원", "부동산", "쇼핑", "안보", "여행", "의료", "추가등록"]
     let firestoreCollectionList = ["emergency", "finance", "culture", "civil complaint", "real property", "shopping", "security", "travel", "medical"]
-    let searchController = UISearchController(searchResultsController: nil)
+    let searchController: UISearchController = {
+        let search = UISearchController(searchResultsController: nil)
+        search.obscuresBackgroundDuringPresentation = true
+        search.hidesNavigationBarDuringPresentation = true
+        search.definesPresentationContext = true
+        search.searchBar.placeholder = Texts.name.rawValue
+        if let textfield = search.searchBar.value(forKey: "searchField") as? UITextField {
+            textfield.backgroundColor = .systemBackground
+            textfield.attributedPlaceholder = NSAttributedString(string: textfield.placeholder ?? "", attributes: [NSAttributedString.Key.foregroundColor : UIColor.secondaryLabel])
+            if let leftView = textfield.leftView as? UIImageView {
+                leftView.image = leftView.image?.withRenderingMode(.alwaysTemplate)
+                leftView.tintColor = .secondaryLabel
+            }
+        }
+        return search
+    }()
     private var savedContacts: [[String:String]] = []
     private var contactsData: [[String:Any]] = []
     private var filteredContacts = [[String:Any]]()
@@ -36,13 +51,12 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        navigationController?.interactivePopGestureRecognizer?.delegate = self
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        self.navigationController?.navigationBar.prefersLargeTitles = true
         
-        self.searchController.searchResultsUpdater = self
-        self.searchController.obscuresBackgroundDuringPresentation = false
-        self.searchController.hidesNavigationBarDuringPresentation = true
-        self.searchController.searchBar.placeholder = Texts.name.rawValue
-        
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+
         bannerView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
         bannerView.adUnitID = Keys.bannerAdID.rawValue
         bannerView.rootViewController = self
@@ -72,23 +86,49 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         navigationController?.navigationBar.prefersLargeTitles = false
     }
     
-    // MARK: Custom Method
+    // MARK: Constraints
     func setConstraints() {
         self.view.addSubview(tableView)
         
+        tableView.isScrollEnabled = true
         tableView.tableFooterView = UIView(frame: .zero)
         tableView.snp.makeConstraints{ (make) in
-            make.width.height.equalTo(self.view.safeAreaLayoutGuide)
+            make.top.equalTo(self.view.safeAreaLayoutGuide)
+            make.left.right.bottom.equalTo(self.view)
             make.center.equalTo(self.view.safeAreaLayoutGuide)
         }
     }
     
     private func setNavigationBarItems() {
-        navigationItem.searchController = searchController
+        
+        navigationController?.navigationBar.isHidden = false
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.showsLargeContentViewer = true
+//        navigationController?.navigationBar.sizeToFit()
         navigationItem.hidesSearchBarWhenScrolling = false
-        definesPresentationContext = true
+        navigationItem.searchController = searchController
+//        navigationItem.largeTitleDisplayMode = .always
+        navigationItem.title = Texts.title.rawValue
+//        navigationController?.navigationBar.barTintColor = UIColor(red: 0, green: 171/255, blue: 142/255, alpha: 1)
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = UIColor(red: 0, green: 171/255, blue: 142/255, alpha: 1)
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+
+        navigationController?.navigationBar.tintColor = .white
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.compactAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        
+//        DispatchQueue.main.async {
+//            self.tableView.performBatchUpdates({
+//                self.tableView.reloadData()
+//            }, completion: nil)
+//        }
     }
     
+    // MARK: Life Cycle
     /// firestore 데이터를 읽어오는 메소드
     func setFireStoreData() {
         let db = Firestore.firestore()
@@ -127,7 +167,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
-    // 초성 분리 메소드
+    /// 초성 분리 메소드
     func extractPrefixKoreann(name:String) -> [String] {
         let word = name
         var convertedWord: [String] = []
@@ -201,6 +241,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
                 make.left.equalTo(cell).offset(UIScreen.main.bounds.width / 22)
             }
         }
+        cell.separatorInset = .zero
         return cell
     }
     

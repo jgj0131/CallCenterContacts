@@ -20,7 +20,7 @@ class DetailViewController: UIViewController {
     lazy var titleLabel: UILabel = {
         let title = UILabel()
         title.text = Texts.title.rawValue
-        title.textColor = .label
+        title.textColor = .white
         title.font = UIFont.boldSystemFont(ofSize: 20)
         title.translatesAutoresizingMaskIntoConstraints = false
         return title
@@ -36,12 +36,27 @@ class DetailViewController: UIViewController {
     var listIndex = 0
     private var  contactsData: [[String:Any]] = []
     private var  userContactsData: [[String:String]] = []
-    let searchController = UISearchController(searchResultsController: nil)
+    let searchController: UISearchController = {
+        let search = UISearchController(searchResultsController: nil)
+        search.obscuresBackgroundDuringPresentation = true
+        search.hidesNavigationBarDuringPresentation = false
+        search.searchBar.placeholder = Texts.name.rawValue
+        if let textfield = search.searchBar.value(forKey: "searchField") as? UITextField {
+            textfield.backgroundColor = .systemBackground
+            textfield.attributedPlaceholder = NSAttributedString(string: textfield.placeholder ?? "", attributes: [NSAttributedString.Key.foregroundColor : UIColor.secondaryLabel])
+            if let leftView = textfield.leftView as? UIImageView {
+                leftView.image = leftView.image?.withRenderingMode(.alwaysTemplate)
+                leftView.tintColor = .secondaryLabel
+            }
+        }
+        return search
+    }()
     private var filteredContacts = [[String:Any]]()
     private var contactSectionTitles = [String]()
     private var totalContactsKey = [String:[[String:Any]]]()
     let prefixs: [String:[UInt32]] = ["ㄱ": [4352, 12593], "ㄲ": [4353, 12594], "ㄴ": [4354, 12596], "ㄷ": [4355, 12599], "ㄸ": [4356, 12600], "ㄹ": [4357, 12601], "ㅁ":[4358, 12609], "ㅂ": [4359, 12610], "ㅃ": [4360, 12611], "ㅅ": [4361, 12613], "ㅆ": [4362, 12614], "ㅇ": [4363, 12615], "ㅈ": [4364, 12616], "ㅉ": [4365, 12617], "ㅊ": [4366, 12618], "ㅋ": [4367, 12619], "ㅌ": [4368, 12620], "ㅍ": [4368, 12621], "ㅎ": [4370, 12622]]
     
+    // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .systemBackground
@@ -84,18 +99,19 @@ class DetailViewController: UIViewController {
         self.tableView.register(TableViewCell.self, forCellReuseIdentifier: TableViewCell.identifier)
         
         self.searchController.searchResultsUpdater = self
-        self.searchController.obscuresBackgroundDuringPresentation = false
-        self.searchController.hidesNavigationBarDuringPresentation = false
-        self.searchController.searchBar.placeholder = Texts.name.rawValue
         
         setFirestoreData(listIndex: listIndex)
         setConstraints()
-        setNavigationBarItems()
         setGesture()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        setNavigationBarItems()
     }
             
     override func viewWillDisappear(_ animated: Bool) {
-        titleLabel.removeFromSuperview()
+//        titleLabel.removeFromSuperview()
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     override func viewDidLayoutSubviews() {
@@ -104,7 +120,7 @@ class DetailViewController: UIViewController {
         }
     }
     
-    // MARK: Custom Method
+    // MARK: Constraints
     func setConstraints() {
         self.view.addSubview(collectionView)
         self.view.addSubview(tableView)
@@ -138,6 +154,34 @@ class DetailViewController: UIViewController {
         }
     }
     
+    private func setNavigationBarItems() {
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        definesPresentationContext = true
+        navigationController?.navigationBar.isHidden = false
+        navigationItem.title = Texts.title.rawValue
+//        if listIndex == 0 {
+//            navigationController?.navigationBar.barTintColor = UIColor(red: 1, green: 100/255, blue: 78/255, alpha: 1)
+//        } else {
+//            navigationController?.navigationBar.barTintColor = UIColor(red: 0, green: 171/255, blue: 142/255, alpha: 1)
+//        }
+//        let targetView = self.navigationController?.navigationBar
+//        targetView?.addSubview(titleLabel)
+//        titleLabel.centerXAnchor.constraint(equalTo: (targetView?.centerXAnchor)!).isActive = true
+//        titleLabel.topAnchor.constraint(equalTo: (targetView?.topAnchor)!, constant: 10).isActive = true
+        
+        
+        let buttonIcon = UIImage(named: "back")
+        let buttonIconSize = CGRect(origin: CGPoint.zero, size: CGSize(width: 5, height: 5))
+        let button = UIButton(frame: buttonIconSize)
+        button.setBackgroundImage(buttonIcon, for: .normal)
+        let barButton = UIBarButtonItem(customView: button)
+        button.addTarget(self, action: #selector(popView(_:)), for: .touchUpInside)
+        barButton.customView?.heightAnchor.constraint(equalToConstant: 15).isActive = true
+        barButton.customView?.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        navigationItem.leftBarButtonItem = barButton
+    }
+    
     func setGesture() {
         let leftSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeLeft(recognizer:)))
         let rightSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeRight(recognizer:)))
@@ -148,6 +192,7 @@ class DetailViewController: UIViewController {
         tableView.addGestureRecognizer(rightSwipeGestureRecognizer)
     }
     
+    // MARK: Custom Method
     @objc
     func handleSwipeLeft(recognizer: UISwipeGestureRecognizer) {
         if listIndex == firestoreCollectionList.count - 1 {
@@ -164,6 +209,11 @@ class DetailViewController: UIViewController {
         collectionView.reloadData()
         collectionView.scrollToItem(at: IndexPath(row: listIndex, section: 0), at: .centeredHorizontally, animated: true)
         
+//        if listIndex == 0 {
+//            navigationController?.navigationBar.barTintColor = UIColor(red: 1, green: 100/255, blue: 78/255, alpha: 1)
+//        } else {
+//            navigationController?.navigationBar.barTintColor = UIColor(red: 0, green: 171/255, blue: 142/255, alpha: 1)
+//        }
     }
     
     @objc
@@ -181,28 +231,12 @@ class DetailViewController: UIViewController {
         cell.iconImage.image = UIImage(named: firestoreCollectionList[listIndex] + "_enable")
         collectionView.reloadData()
         collectionView.scrollToItem(at: IndexPath(row: listIndex, section: 0), at: .centeredHorizontally, animated: true)
-    }
-    
-    private func setNavigationBarItems() {
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
-        definesPresentationContext = true
         
-        let targetView = self.navigationController?.navigationBar
-        targetView?.addSubview(titleLabel)
-        titleLabel.centerXAnchor.constraint(equalTo: (targetView?.centerXAnchor)!).isActive = true
-        titleLabel.topAnchor.constraint(equalTo: (targetView?.topAnchor)!, constant: 10).isActive = true
-        
-        
-        let buttonIcon = UIImage(named: "back")
-        let buttonIconSize = CGRect(origin: CGPoint.zero, size: CGSize(width: 5, height: 5))
-        let button = UIButton(frame: buttonIconSize)
-        button.setBackgroundImage(buttonIcon, for: .normal)
-        let barButton = UIBarButtonItem(customView: button)
-        button.addTarget(self, action: #selector(popView(_:)), for: .touchUpInside)
-        barButton.customView?.heightAnchor.constraint(equalToConstant: 15).isActive = true
-        barButton.customView?.widthAnchor.constraint(equalToConstant: 20).isActive = true
-        navigationItem.leftBarButtonItem = barButton
+//        if listIndex == 0 {
+//            navigationController?.navigationBar.barTintColor = UIColor(red: 1, green: 100/255, blue: 78/255, alpha: 1)
+//        } else {
+//            navigationController?.navigationBar.barTintColor = UIColor(red: 0, green: 171/255, blue: 142/255, alpha: 1)
+//        }
     }
     
     /// navigationController에서 pop하는 메소드
@@ -432,7 +466,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.setUserDefaults(contacts: userContactsData, value: contactToString[indexPath.row])
             }
         }
-    
+        cell.separatorInset = .zero
         return cell
     }
     

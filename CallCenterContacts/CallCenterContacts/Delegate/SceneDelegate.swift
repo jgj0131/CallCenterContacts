@@ -23,9 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
         let navigationController = UINavigationController(rootViewController: ViewController())
-        navigationController.navigationBar.backgroundColor = .systemBackground
-        navigationController.navigationBar.topItem?.title = Texts.title.rawValue
-        navigationController.navigationBar.prefersLargeTitles = true
+//        navigationController.navigationBar.backgroundColor = .systemBackground
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }

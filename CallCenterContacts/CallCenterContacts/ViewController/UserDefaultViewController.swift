@@ -18,7 +18,7 @@ class UserDefaultViewController: UIViewController {
     lazy var titleLabel: UILabel = {
         let title = UILabel()
         title.text = Texts.title.rawValue
-        title.textColor = .label
+        title.textColor = .white
         title.font = UIFont.boldSystemFont(ofSize: 20)
         title.translatesAutoresizingMaskIntoConstraints = false
         return title
@@ -27,7 +27,23 @@ class UserDefaultViewController: UIViewController {
     
     // MARK: Property
     private var  contactsData: [[String:String]] = []
-    let searchController = UISearchController(searchResultsController: nil)
+    let searchController: UISearchController = {
+        let search = UISearchController(searchResultsController: nil)
+        search.obscuresBackgroundDuringPresentation = true
+        search.hidesNavigationBarDuringPresentation = false
+        search.searchBar.placeholder = Texts.name.rawValue
+//        search.searchBar.barTintColor = .systemBackground
+//        search.searchBar.tintColor = .secondaryLabel
+        if let textfield = search.searchBar.value(forKey: "searchField") as? UITextField {
+            textfield.backgroundColor = .systemBackground
+            textfield.attributedPlaceholder = NSAttributedString(string: textfield.placeholder ?? "", attributes: [NSAttributedString.Key.foregroundColor : UIColor.secondaryLabel])
+            if let leftView = textfield.leftView as? UIImageView {
+                leftView.image = leftView.image?.withRenderingMode(.alwaysTemplate)
+                leftView.tintColor = .secondaryLabel
+            }
+        }
+        return search
+    }()
     private var filteredContacts = [[String:String]]()
     private var contactSectionTitles = [String]()
     private var totalContactsKey = [String:[[String:String]]]()
@@ -41,6 +57,7 @@ class UserDefaultViewController: UIViewController {
         case userDataOverlap
     }
     
+    // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .systemBackground
@@ -48,9 +65,6 @@ class UserDefaultViewController: UIViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.searchController.searchResultsUpdater = self
-        self.searchController.obscuresBackgroundDuringPresentation = false
-        self.searchController.hidesNavigationBarDuringPresentation = false
-        self.searchController.searchBar.placeholder = Texts.name.rawValue
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "userCell")
         
         contactsData = UserDefaults.standard.object(forKey: "userData") as? [[String : String]] ?? []
@@ -65,11 +79,15 @@ class UserDefaultViewController: UIViewController {
         
         setTotalContactsKey()
         setConstraints()
-        setNavigationBarItems()
     }
             
+    override func viewWillAppear(_ animated: Bool) {
+        setNavigationBarItems()
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         titleLabel.removeFromSuperview()
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     // MARK: Custom Method
@@ -87,11 +105,8 @@ class UserDefaultViewController: UIViewController {
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         definesPresentationContext = true
-        
-        let targetView = self.navigationController?.navigationBar
-        targetView?.addSubview(titleLabel)
-        titleLabel.centerXAnchor.constraint(equalTo: (targetView?.centerXAnchor)!).isActive = true
-        titleLabel.topAnchor.constraint(equalTo: (targetView?.topAnchor)!, constant: 10).isActive = true
+        navigationController?.navigationBar.isHidden = false
+        navigationItem.title = Texts.title.rawValue
         
         let editButtonIcon = UIImage(named: "insert")
         let editButtonIconSize = CGRect(origin: CGPoint.zero, size: CGSize(width: 5, height: 5))
@@ -345,6 +360,7 @@ extension UserDefaultViewController: UITableViewDelegate, UITableViewDataSource 
             make.centerY.equalTo(cell)
             make.left.equalTo(cell).offset(UIScreen.main.bounds.width / 22)
         }
+        cell.separatorInset = .zero
         return cell
     }
     
